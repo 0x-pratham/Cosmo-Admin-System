@@ -18,14 +18,15 @@ export default function Dashboard() {
 
   // MAIN FORM STATE
   const [formData, setFormData] = useState({
-    studentName: "Student Name",
-    prn: "2023000000",
-    college: "Student College Name",
-    domainKey: "cybersecurity",
-    startDate: "22 May 2026",
-    endDate: "22 August 2026",
-    mode: "Hybrid",
-  })
+  studentName: "Student Name",
+  studentEmail: "",
+  prn: "2023000000",
+  college: "Student College Name",
+  domainKey: "cybersecurity",
+  startDate: "22 May 2026",
+  endDate: "22 August 2026",
+  mode: "Hybrid",
+})
 
   // OFFER ID STATE
   const [offerId, setOfferId] = useState(
@@ -74,24 +75,96 @@ export default function Dashboard() {
   }
 
   // EXPORT PDF
-  const handleExportPdf = async () => {
-    try {
-      setIsExporting(true)
-      setExportError(null)
+  // EXPORT PDF + SEND EMAIL
+const handleExportPdf = async () => {
 
-      await exportOfferLetterPdf({
+  try {
+
+    setIsExporting(true)
+
+    setExportError(null)
+
+    // EXPORT PDF
+    await exportOfferLetterPdf({
+      studentName: formData.studentName,
+      offerId,
+    })
+
+    // SELECT DOMAIN DETAILS
+    const selectedDomain =
+      domains[formData.domainKey]
+
+    // SEND EMAIL
+    const response = await fetch("/api/send-email", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+
         studentName: formData.studentName,
+
+        studentEmail: formData.studentEmail,
+
+        prn: formData.prn,
+
+        college: formData.college,
+
+        domainName:
+          selectedDomain?.domainName ?? "",
+
+        role:
+          selectedDomain?.role ?? "",
+
+        startDate: formData.startDate,
+
+        endDate: formData.endDate,
+
+        mode: formData.mode,
+
         offerId,
-      })
-    } catch (error) {
-      console.error("PDF Export Failed:", error)
-      setExportError(
-        "PDF export failed. Scroll the letter into view and try again."
+
+        verificationLink:
+          `https://cosmolix.co.in/verify/${offerId}`,
+
+      }),
+    })
+
+    const result = await response.json()
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        "Failed to send email"
       )
-    } finally {
-      setIsExporting(false)
     }
+
+    alert(
+      "Offer Letter PDF Exported & Email Sent Successfully"
+    )
+
+  } catch (error) {
+
+    console.error(
+      "PROCESS FAILED:",
+      error
+    )
+
+    setExportError(
+      error.message ||
+      "Failed to export PDF or send email."
+    )
+
+  } finally {
+
+    setIsExporting(false)
+
   }
+}
 
   return (
     <div className="min-h-screen bg-[#e8ecf2]">
@@ -177,6 +250,23 @@ export default function Dashboard() {
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
               />
             </div>
+
+            {/* STUDENT EMAIL */}
+<div>
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Student Email Address
+  </label>
+
+  <input
+    type="email"
+    value={formData.studentEmail}
+    onChange={(e) =>
+      handleChange("studentEmail", e.target.value)
+    }
+    className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
+    placeholder="student@example.com"
+  />
+</div>
 
             {/* PRN */}
             <div>
