@@ -1,0 +1,66 @@
+/* GLOBAL PRINT OPTIMIZATION */
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #offer-letter {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* PDF EXPORT OPTIMIZATION */
+
+#offer-letter {
+  font-family: "Geist Variable", "Geist", system-ui, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+
+  overflow: hidden;
+}
+
+.offer-letter-page {
+  font-family: "Geist Variable", "Geist", system-ui, sans-serif;
+}
+
+/* Prevent page breaks */
+
+.no-break {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Improve image rendering */
+
+img {
+  image-rendering: auto;
+}
+
+/* Global box sizing */
+
+* {
+  box-sizing: border-box;
+}
+
+/* Disable text selection during export */
+
+#offer-letter * {
+  user-select: none;
+}
+
+/* Maintain print colors */
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
