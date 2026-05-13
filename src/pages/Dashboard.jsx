@@ -108,6 +108,8 @@ export default function Dashboard() {
 
 console.log("PDF URL:", pdfUrl)
 
+console.log("CALLING SAVE TO SUPABASE")
+
 await saveOfferToSupabase({
 
   offerId,
