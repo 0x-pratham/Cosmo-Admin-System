@@ -2,37 +2,58 @@ import { supabase } from "@/lib/supabase"
 
 export async function saveOfferToSupabase(data) {
 
-  const { error } =
-    await supabase
-      .from("offer_letters")
-      .insert([{
+  console.log("SAVING DATA:", data)
 
-        offer_id: data.offerId,
+  const {
+    error,
+    data: insertedData
+  } = await supabase
+    .from("offer_letters")
+    .insert([{
 
-        student_name: data.studentName,
+      offer_id: data.offerId,
 
-        student_email: data.studentEmail,
+      student_name: data.studentName,
 
-        prn: data.prn,
+      student_email: data.studentEmail,
 
-        college: data.college,
+      prn: data.prn,
 
-        domain_key: data.domainKey,
+      college: data.college,
 
-        domain_name: data.domainName,
+      domain_key: data.domainKey,
 
-        role: data.role,
+      domain_name: data.domainName,
 
-        start_date: data.startDate,
+      role: data.role,
 
-        end_date: data.endDate,
+      start_date: data.startDate,
 
-        mode: data.mode,
+      end_date: data.endDate,
 
-        pdf_url: data.pdfUrl,
-      }])
+      mode: data.mode,
+
+      pdf_url: data.pdfUrl,
+
+    }])
+    .select()
+
+  console.log(
+    "INSERT RESULT:",
+    insertedData
+  )
+
+  console.log(
+    "INSERT ERROR:",
+    error
+  )
 
   if (error) {
+
+    alert(error.message)
+
     throw error
   }
+
+  return insertedData
 }
