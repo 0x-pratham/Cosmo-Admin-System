@@ -1,5 +1,6 @@
 import html2pdf from "html2pdf.js"
 import { prepareCloneForHtml2Canvas } from "@/utils/pdfCaptureCompat"
+import { uploadPdf } from "@/utils/uploadPdf"
 
 export const exportOfferLetterPdf = async ({
   elementId = "offer-letter",
@@ -43,9 +44,31 @@ export const exportOfferLetterPdf = async ({
 
   try {
     // We execute the generation
-    return await html2pdf().set(opt).from(element).save()
+    const worker =
+  html2pdf()
+    .set(opt)
+    .from(element)
+
+const pdfBlob =
+  await worker.outputPdf("blob")
+
+// FILE NAME
+const fileName =
+  `${safeName}_${safeId}.pdf`
+
+// UPLOAD TO SUPABASE
+const publicUrl =
+  await uploadPdf({
+    blob: pdfBlob,
+    fileName,
+  })
+
+// STILL DOWNLOAD LOCALLY
+await worker.save()
+
+return publicUrl
   } catch (err) {
     console.error("PDF Engine Error:", err)
-    throw new Error("The PDF engine failed to render. This is likely due to an unsupported CSS property like oklch.")
+    throw err
   }
 }
