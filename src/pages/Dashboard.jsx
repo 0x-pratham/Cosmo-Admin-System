@@ -173,6 +173,7 @@ await saveOfferToSupabase({
       alert("Offer Letter Exported & Email Sent Successfully");
     } catch (error) {
       console.error("PROCESS FAILED:", error);
+      alert(error.message)
       setExportError(error.message || "Failed to export PDF or send email.");
     } finally {
       setIsExporting(false);
