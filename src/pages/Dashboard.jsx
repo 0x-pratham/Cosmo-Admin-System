@@ -5,7 +5,6 @@ import LoadingButton from "@/components/ui/LoadingButton"
 import { useAuth } from "@/context/AuthContext"
 import { domains } from "@/data/domains"
 import { exportOfferLetterPdf } from "@/utils/exportPdf"
-import { supabase } from "@/lib/supabase"
 import { saveOfferToSupabase } from "@/utils/saveOfferToSupabase"
 import { getNextOfferId } from "@/utils/getNextOfferId"
 
@@ -106,9 +105,6 @@ export default function Dashboard() {
     offerId,
   })
 
-console.log("PDF URL:", pdfUrl)
-
-console.log("CALLING SAVE TO SUPABASE")
 
 await saveOfferToSupabase({
 
@@ -175,42 +171,35 @@ await saveOfferToSupabase({
       alert("Offer Letter Exported & Email Sent Successfully");
     } catch (error) {
       console.error("PROCESS FAILED:", error);
-      alert(error.message)
+
       setExportError(error.message || "Failed to export PDF or send email.");
     } finally {
       setIsExporting(false);
     }
   };
 
-  const testSupabase = async () => {
-
-  const { data, error } =
-    await supabase
-      .from("offer_letters")
-      .select("*")
-
-  console.log("SUPABASE DATA:", data)
-
-  console.log("SUPABASE ERROR:", error)
-
-  if (error) {
-
-    alert("Supabase Failed")
-
-  } else {
-
-    alert("Supabase Connected")
-  }
-}
 
   return (
-    <div className="min-h-screen bg-[#e8ecf2]">
-      <div className="bg-[#0f172a] text-white px-8 py-5 shadow-lg border-b border-slate-800/80">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200">
+      <div className="backdrop-blur-xl bg-slate-950/90 text-white px-8 py-5 border-b border-slate-800 shadow-2xl sticky top-0 z-50">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-6">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400 font-semibold">Internal tooling</p>
-            <h1 className="text-2xl font-bold tracking-tight mt-1">Offer letter generator</h1>
-          </div>
+          <div className="space-y-1">
+  <div className="flex items-center gap-2">
+    <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+
+    <p className="text-[11px] uppercase tracking-[0.3em] text-slate-400 font-semibold">
+      Cosmolix HR Workspace
+    </p>
+  </div>
+
+  <h1 className="text-3xl font-bold tracking-tight text-white">
+    Internship Offer Letter Generator
+  </h1>
+
+  <p className="text-sm text-slate-400">
+    Generate verified internship offer letters with secure QR validation.
+  </p>
+</div>
 
           <div className="flex items-center gap-3">
             {!authDisabled && (
@@ -228,18 +217,22 @@ await saveOfferToSupabase({
             <LoadingButton loading={isExporting} onClick={handleExportPdf} fullWidth={false}>
               Export PDF
             </LoadingButton>
-            <button
-  onClick={testSupabase}
-  className="bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-semibold"
->
-  Test Supabase
-</button>
+            
           </div>
         </div>
       </div>
 
       <div className="max-w-[1600px] mx-auto grid grid-cols-[420px_1fr] gap-8 p-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-8 h-fit sticky top-8">
+        <div className="bg-white/80 backdrop-blur-xl rounded-[28px] shadow-xl border border-slate-200/80 p-8 h-fit sticky top-28">
+        <div className="mb-8">
+  <h2 className="text-2xl font-bold text-slate-900">
+    Candidate Details
+  </h2>
+
+  <p className="text-sm text-slate-500 mt-1">
+    Fill in the intern information to generate a verified offer letter.
+  </p>
+</div>
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Student Full Name</label>
@@ -318,9 +311,9 @@ await saveOfferToSupabase({
               </div>
             </div>
 
-            <div className="bg-gray-100 rounded-2xl p-5 border border-gray-200">
-              <p className="text-xs uppercase tracking-wide text-gray-500">Offer Letter ID</p>
-              <p className="mt-2 text-lg font-bold text-black tracking-wide">{offerId}</p>
+            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 border border-slate-700 shadow-lg">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Offer Letter ID</p>
+              <p className="mt-3 text-xl font-bold text-white tracking-[0.18em] break-all">{offerId}</p>
             </div>
 
             {exportError && (

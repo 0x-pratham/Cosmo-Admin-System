@@ -11,7 +11,7 @@ export default function LoadingButton({
       className={`
         ${fullWidth ? "w-full" : "w-auto px-6"}
         py-4
-        rounded-2xl
+        rounded-3xl
         font-semibold
         transition-all
         duration-300
@@ -22,7 +22,7 @@ export default function LoadingButton({
         ${
           loading
             ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-black text-white hover:bg-gray-800"
+            : "bg-gradient-to-r from-slate-950 to-slate-800 text-white hover:scale-[1.01] hover:shadow-2xl active:scale-[0.99]"
         }
       `}
     >
