@@ -7,6 +7,7 @@ import { domains } from "@/data/domains"
 import { exportOfferLetterPdf } from "@/utils/exportPdf"
 import { generateOfferLetterId } from "@/utils/generateId"
 import { saveOfferRecord } from "@/utils/offerRegistry"
+import { supabase } from "@/lib/supabase"
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -64,10 +65,15 @@ export default function Dashboard() {
       setExportError(null);
 
       // 1. Generate the PDF
-      await exportOfferLetterPdf({
-        studentName: formData.studentName,
-        offerId,
-      });
+      const pdfUrl =
+  await exportOfferLetterPdf({
+    studentName:
+      formData.studentName,
+
+    offerId,
+  })
+
+console.log("PDF URL:", pdfUrl)
 
       const selectedDomain = domains[formData.domainKey];
 
@@ -80,7 +86,7 @@ export default function Dashboard() {
           domainName: selectedDomain?.domainName ?? "",
           role: selectedDomain?.role ?? "",
           offerId,
-          verificationLink: `https://cosmolix.co.in/verify/${offerId}`,
+          verificationLink: pdfUrl,
         }),
       });
 
@@ -102,6 +108,27 @@ export default function Dashboard() {
       setIsExporting(false);
     }
   };
+
+  const testSupabase = async () => {
+
+  const { data, error } =
+    await supabase
+      .from("offer_letters")
+      .select("*")
+
+  console.log("SUPABASE DATA:", data)
+
+  console.log("SUPABASE ERROR:", error)
+
+  if (error) {
+
+    alert("Supabase Failed")
+
+  } else {
+
+    alert("Supabase Connected")
+  }
+}
 
   return (
     <div className="min-h-screen bg-[#e8ecf2]">
@@ -128,6 +155,12 @@ export default function Dashboard() {
             <LoadingButton loading={isExporting} onClick={handleExportPdf} fullWidth={false}>
               Export PDF
             </LoadingButton>
+            <button
+  onClick={testSupabase}
+  className="bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-semibold"
+>
+  Test Supabase
+</button>
           </div>
         </div>
       </div>
