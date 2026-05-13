@@ -1,11 +1,10 @@
 /* GLOBAL PRINT OPTIMIZATION */
-
 @media print {
   body {
     margin: 0;
     padding: 0;
-    background: white !important;
-
+    background-color: #ffffff !important;
+    /* Forces browsers to render background colors and images in print/PDF */
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -13,54 +12,62 @@
   #offer-letter {
     box-shadow: none !important;
     margin: 0 auto !important;
+    border: none !important;
   }
 }
 
 /* PDF EXPORT OPTIMIZATION */
-
 #offer-letter {
-  font-family: "Geist Variable", "Geist", system-ui, sans-serif;
-
+  /* Using standard system fonts as fallbacks for PDF rendering stability */
+  font-family: "Geist", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   text-rendering: optimizeLegibility;
-
   overflow: hidden;
+  background-color: #ffffff;
+  color: #1e293b; /* Using Hex instead of oklch variable */
 }
 
+/* Ensure container dimensions are strictly maintained */
 .offer-letter-page {
-  font-family: "Geist Variable", "Geist", system-ui, sans-serif;
+  width: 794px;
+  min-height: 1123px;
+  background-color: #ffffff;
 }
 
-/* Prevent page breaks */
-
+/* Prevent content from splitting across PDF pages */
 .no-break {
   break-inside: avoid;
   page-break-inside: avoid;
 }
 
-/* Improve image rendering */
-
+/* Smooth image rendering for logos and signatures */
 img {
   image-rendering: auto;
+  display: block;
+  max-width: 100%;
 }
 
-/* Global box sizing */
-
+/* Standard box model for alignment consistency */
 * {
   box-sizing: border-box;
 }
 
-/* Disable text selection during export */
-
+/* Prevent selection artifacts in the PDF output */
 #offer-letter * {
   user-select: none;
 }
 
-/* Maintain print colors */
-
+/* Force high-quality color rendering */
 html {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  /* Hard reset of any potential oklch backgrounds inherited from tailwind */
+  background-color: #f4f6f9;
+}
+
+/* Standardizing link colors to avoid oklch detection */
+a {
+  color: #2563eb;
+  text-decoration: none;
 }

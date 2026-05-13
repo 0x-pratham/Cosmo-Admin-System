@@ -1,17 +1,22 @@
 /**
- * Base URL for verification links (QR + manual URLs).
- * Uses current origin so local dev and deployed builds stay in sync.
+ * Generates a full verification URL for a given offer ID.
+ * This is used by the VerificationQR component and email service.
  */
 export function getVerificationUrl(offerId) {
   if (!offerId) return ""
 
+  // URL-safe encoding for the ID (handles slashes like CPL/INT/...)
   const safeId = encodeURIComponent(offerId)
-  const base = import.meta.env.BASE_URL || "/"
-  const normalizedBase = base.endsWith("/") ? base : `${base}/`
+  
+  /**
+   * Determine the base origin. 
+   * In the browser, window.location.origin dynamically adapts (e.g., localhost vs cosmolix.co.in).
+   * In a non-browser environment (like server-side rendering), it defaults to the production URL.
+   */
+  const origin = typeof window !== "undefined" 
+    ? window.location.origin 
+    : "https://cosmolix.co.in"
 
-  if (typeof window !== "undefined") {
-    return `${window.location.origin}${normalizedBase}verify/${safeId}`
-  }
-
-  return `${normalizedBase}verify/${safeId}`
+  // Construct the final verification route
+  return `${origin}/verify/${safeId}`
 }

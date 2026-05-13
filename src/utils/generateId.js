@@ -1,11 +1,9 @@
 export const generateOfferLetterId = ({
-  domainKey = "GEN",
+  domainKey = "fullstack",
   serialNumber = 1,
 }) => {
-  // CURRENT YEAR
   const year = new Date().getFullYear()
 
-  // DOMAIN PREFIX MAP
   const domainPrefixes = {
     fullstack: "FSD",
     ai_ml: "AIML",
@@ -15,12 +13,11 @@ export const generateOfferLetterId = ({
     datascience: "DSA",
   }
 
-  // GET PREFIX
-  const prefix = domainPrefixes[domainKey] || "GEN"
+  // Ensure we check the key in lowercase to match the dashboard's state keys
+  const prefix = domainPrefixes[domainKey?.toLowerCase()] || "GEN"
 
-  // SERIAL FORMAT
   const formattedSerial = String(serialNumber).padStart(4, "0")
 
-  // FINAL OFFER ID
+  // ID Format: CPL/PREFIX/YEAR/0001
   return `CPL/${prefix}/${year}/${formattedSerial}`
 }

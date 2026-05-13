@@ -1,87 +1,77 @@
 /**
- * html2canvas (used by html2pdf.js) cannot parse modern CSS color functions like
- * `oklch()`, which Tailwind v4 emits. We mirror the live DOM into the cloned
- * document using computed styles (resolved to rgb/hex in browsers) and strip
- * stylesheets/classes so the canvas step never sees raw oklch rules.
+ * Sanitizes both oklch and oklab color functions to a safe Hex fallback.
  */
-
 export function sanitizeCssColorFunctions(value) {
   if (typeof value !== "string" || !value) return value
-
+  
+  // Catch both oklch and oklab
+  if (value.includes("oklch") || value.includes("oklab")) {
+    return "#0f172a"
+  }
   return value
-    .replace(/\boklch\([^)]*\)/gi, "#64748b")
-    .replace(/\blab\([^)]*\)/gi, "#64748b")
-    .replace(/\blch\([^)]*\)/gi, "#64748b")
-    .replace(/\bhwb\([^)]*\)/gi, "#64748b")
-    .replace(/\bcolor\([^)]*\)/gi, "#64748b")
-}
-
-function copyComputedStyles(sourceEl, targetEl) {
-  if (
-    sourceEl.nodeType !== Node.ELEMENT_NODE ||
-    targetEl.nodeType !== Node.ELEMENT_NODE
-  ) {
-    return
-  }
-
-  const computed = window.getComputedStyle(sourceEl)
-
-  for (let i = 0; i < computed.length; i++) {
-    const prop = computed[i]
-
-    try {
-      let val = computed.getPropertyValue(prop)
-
-      if (!val) continue
-
-      val = sanitizeCssColorFunctions(val)
-
-      targetEl.style.setProperty(prop, val, computed.getPropertyPriority(prop))
-    } catch {
-      /* invalid property for inline style */
-    }
-  }
-
-  const srcChildren = sourceEl.children
-  const tgtChildren = targetEl.children
-  const n = Math.min(srcChildren.length, tgtChildren.length)
-
-  for (let i = 0; i < n; i++) {
-    copyComputedStyles(srcChildren[i], tgtChildren[i])
-  }
-}
-
-export function stripClassNames(rootEl) {
-  if (rootEl.nodeType !== Node.ELEMENT_NODE) return
-
-  rootEl.removeAttribute("class")
-
-  for (const child of rootEl.children) {
-    stripClassNames(child)
-  }
-}
-
-export function removeExternalStylesFromClone(clonedDoc) {
-  clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach((node) => {
-    node.remove()
-  })
-
-  clonedDoc.querySelectorAll("style").forEach((node) => {
-    node.remove()
-  })
 }
 
 /**
- * @param {Document} clonedDoc - html2canvas clone
- * @param {HTMLElement} originalRoot - live `#offer-letter` node
- * @param {string} elementId
+ * @param {Document} clonedDoc - The internal document used by html2canvas
+ * @param {HTMLElement} originalRoot - The actual live DOM element
+ * @param {string} elementId - The ID of the container ('offer-letter')
  */
 export function prepareCloneForHtml2Canvas(clonedDoc, originalRoot, elementId) {
   const clonedRoot = clonedDoc.getElementById(elementId)
+  if (!clonedRoot) return
 
-  if (!clonedRoot || !originalRoot) return
+  // 1. Force a white background/dark text on the root to clear global defaults
+  clonedRoot.style.setProperty("background-color", "#ffffff", "important")
+  clonedRoot.style.setProperty("color", "#0f172a", "important")
 
-  copyComputedStyles(originalRoot, clonedRoot)
-  stripClassNames(clonedRoot)
-  removeExternalStylesFromClone(clonedDoc)
+  // 2. Deep sanitize all elements in the clone
+  const allClonedElements = clonedRoot.querySelectorAll("*")
+  
+  allClonedElements.forEach((el) => {
+    // Check inline styles for oklch OR oklab
+    const inlineStyle = el.getAttribute("style") || ""
+    if (inlineStyle.includes("oklch") || inlineStyle.includes("oklab")) {
+      // Regex updated to catch oklab as well
+      const sanitized = inlineStyle.replace(/(oklch|oklab)\([^)]*\)/g, "#0f172a")
+      el.setAttribute("style", sanitized)
+    }
+
+    try {
+      // We look at the computed style from the ORIGINAL element (live DOM)
+      // because the clone's styles might not be fully computed yet.
+      const originalEl = Array.from(originalRoot.querySelectorAll("*"))[
+        Array.from(allClonedElements).indexOf(el)
+      ];
+      
+      const computed = window.getComputedStyle(originalEl || el)
+      
+      const propertiesToFix = [
+        "color", 
+        "background-color", 
+        "border-color", 
+        "fill", 
+        "stroke"
+      ]
+
+      propertiesToFix.forEach(prop => {
+        const val = computed.getPropertyValue(prop)
+        // Check for both modern color functions
+        if (val && (val.includes("oklch") || val.includes("oklab"))) {
+          const fallback = prop === "background-color" ? "#ffffff" : "#0f172a"
+          el.style.setProperty(prop, fallback, "important")
+        }
+      })
+    } catch (e) {
+      // Silently fail if style computation is blocked
+    }
+  })
+
+  // 3. Scrub Style Tags: This is where global Tailwind/Radix variables live
+  const styleTags = clonedDoc.querySelectorAll("style")
+  styleTags.forEach(tag => {
+    if (tag.innerHTML.includes("oklch") || tag.innerHTML.includes("oklab")) {
+      // Use a global regex to replace all instances in the CSS sheet
+      tag.innerHTML = tag.innerHTML.replace(/(oklch|oklab)\([^)]*\)/g, "#0f172a")
+    }
+  })
 }

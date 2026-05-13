@@ -1,5 +1,4 @@
 import html2pdf from "html2pdf.js"
-
 import { prepareCloneForHtml2Canvas } from "@/utils/pdfCaptureCompat"
 
 export const exportOfferLetterPdf = async ({
@@ -13,50 +12,40 @@ export const exportOfferLetterPdf = async ({
     return Promise.reject(new Error("Offer letter element not found"))
   }
 
+  // Ensure the element is scrolled into view so all assets are "active" in the browser
   element.scrollIntoView({ block: "nearest", inline: "nearest" })
-  await new Promise((resolve) => {
-    requestAnimationFrame(() => resolve())
-  })
 
   const safeName = String(studentName || "Student").replace(/[/\\?%*:|"<>]/g, "_")
   const safeId = String(offerId || "offer").replace(/[/\\?%*:|"<>]/g, "_")
 
   const opt = {
-    margin: [0, 0, 0, 0],
-
+    margin: 0,
     filename: `${safeName}_${safeId}.pdf`,
-
-    image: {
-      type: "jpeg",
-      quality: 0.98,
-    },
-
+    image: { type: "jpeg", quality: 1.0 },
     html2canvas: {
-      scale: 2,
-      useCORS: true,
+      scale: 3, // High scale for professional print quality
+      useCORS: true, // Necessary for loading logos/stamps from other domains or assets
       logging: false,
-      windowWidth: element.scrollWidth,
-
-      onclone(clonedDoc) {
-        const originalRoot = document.getElementById(elementId)
-
-        prepareCloneForHtml2Canvas(clonedDoc, originalRoot, elementId)
+      letterRendering: true,
+      windowWidth: 800, // Fixed width to ensure Tailwind 'sm' or 'md' breakpoints don't trigger
+      onclone: (clonedDoc) => {
+        // This is the critical step that strips the 'oklch' colors before the crash
+        prepareCloneForHtml2Canvas(clonedDoc, element, elementId)
       },
     },
-
     jsPDF: {
       unit: "px",
-      format: "a4",
+      format: [794, 1123], // Exact A4 dimensions at 96 DPI
       orientation: "portrait",
-    },
-
-    pagebreak: {
-      mode: ["css", "legacy"],
-      before: ".page-break-before",
-      after: ".page-break-after",
-      avoid: ".no-break",
+      hotfixes: ["px_scaling"],
     },
   }
 
-  return html2pdf().set(opt).from(element).save()
+  try {
+    // We execute the generation
+    return await html2pdf().set(opt).from(element).save()
+  } catch (err) {
+    console.error("PDF Engine Error:", err)
+    throw new Error("The PDF engine failed to render. This is likely due to an unsupported CSS property like oklch.")
+  }
 }
