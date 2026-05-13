@@ -5,9 +5,9 @@ import LoadingButton from "@/components/ui/LoadingButton"
 import { useAuth } from "@/context/AuthContext"
 import { domains } from "@/data/domains"
 import { exportOfferLetterPdf } from "@/utils/exportPdf"
-import { generateOfferLetterId } from "@/utils/generateId"
-import { saveOfferRecord } from "@/utils/offerRegistry"
 import { supabase } from "@/lib/supabase"
+import { saveOfferToSupabase } from "@/utils/saveOfferToSupabase"
+import { getNextOfferId } from "@/utils/getNextOfferId"
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -24,22 +24,37 @@ export default function Dashboard() {
     mode: "Hybrid",
   })
 
-  const [offerId, setOfferId] = useState(
-    generateOfferLetterId({
-      domainKey: "cybersecurity",
-      serialNumber: 1,
-    })
-  )
+  const [offerId, setOfferId] =
+  useState("")
 
   const [isExporting, setIsExporting] = useState(false)
   const [exportError, setExportError] = useState(null)
 
   useEffect(() => {
-    saveOfferRecord(offerId, {
-      ...formData,
-      domainName: domains[formData.domainKey]?.domainName ?? "",
-    })
-  }, [offerId, formData])
+
+  const generateInitialId = async () => {
+
+    try {
+
+      const newId =
+        await getNextOfferId(
+          formData.domainKey
+        )
+
+      setOfferId(newId)
+
+    } catch (error) {
+
+      console.error(
+        "INITIAL ID ERROR:",
+        error
+      )
+    }
+  }
+
+  generateInitialId()
+
+}, [])
 
   const handleChange = (field, value) => {
     const updatedData = {
@@ -50,12 +65,28 @@ export default function Dashboard() {
     setFormData(updatedData)
 
     if (field === "domainKey") {
-      const newId = generateOfferLetterId({
-        domainKey: value,
-        serialNumber: 1,
-      })
-      setOfferId(newId)
+
+  const updateOfferId =
+    async () => {
+
+      try {
+
+        const newId =
+          await getNextOfferId(value)
+
+        setOfferId(newId)
+
+      } catch (error) {
+
+        console.error(
+          "DOMAIN ID ERROR:",
+          error
+        )
+      }
     }
+
+  updateOfferId()
+}
   }
 
   // Inside Dashboard.jsx
@@ -63,6 +94,8 @@ export default function Dashboard() {
     try {
       setIsExporting(true);
       setExportError(null);
+
+      const selectedDomain = domains[formData.domainKey];
 
       // 1. Generate the PDF
       const pdfUrl =
@@ -75,7 +108,44 @@ export default function Dashboard() {
 
 console.log("PDF URL:", pdfUrl)
 
-      const selectedDomain = domains[formData.domainKey];
+await saveOfferToSupabase({
+
+  offerId,
+
+  studentName:
+    formData.studentName,
+
+  studentEmail:
+    formData.studentEmail,
+
+  prn:
+    formData.prn,
+
+  college:
+    formData.college,
+
+  domainKey:
+    formData.domainKey,
+
+  domainName:
+    selectedDomain?.domainName ?? "",
+
+  role:
+    selectedDomain?.role ?? "",
+
+  startDate:
+    formData.startDate,
+
+  endDate:
+    formData.endDate,
+
+  mode:
+    formData.mode,
+
+  pdfUrl,
+})
+
+      
 
       // 2. Send Email
       const response = await fetch("/api/send-email", {
