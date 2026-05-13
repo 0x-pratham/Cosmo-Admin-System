@@ -169,6 +169,9 @@ await saveOfferToSupabase({
       }
 
       alert("Offer Letter Exported & Email Sent Successfully");
+
+      window.location.reload();
+      
     } catch (error) {
       console.error("PROCESS FAILED:", error);
 
