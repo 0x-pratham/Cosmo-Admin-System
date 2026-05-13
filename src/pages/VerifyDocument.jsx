@@ -1,7 +1,7 @@
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useLocation } from "react-router-dom"
 import logo from "@/assets/logo/logo.png"
-import { getOfferRecord } from "@/utils/offerRegistry"
+import { supabase } from "@/lib/supabase"
 
 function parseOfferIdFromPath(pathname) {
   const marker = "/verify/"
@@ -19,8 +19,63 @@ export default function VerifyDocument() {
   const location = useLocation()
   
   const offerId = useMemo(() => parseOfferIdFromPath(location.pathname), [location.pathname])
+
+  const [record, setRecord] =
+  useState(null)
+
+const [loading, setLoading] =
+  useState(true)
+
+  useEffect(() => {
+
+  const fetchRecord =
+    async () => {
+
+      if (!offerId) return
+
+      try {
+
+        const {
+          data,
+          error,
+        } = await supabase
+          .from("offer_letters")
+          .select("*")
+          .eq("offer_id", offerId)
+          .single()
+
+        console.log(
+          "VERIFICATION DATA:",
+          data
+        )
+
+        console.log(
+          "VERIFICATION ERROR:",
+          error
+        )
+
+        if (!error) {
+          setRecord(data)
+        }
+
+      } catch (err) {
+
+        console.error(
+          "VERIFY ERROR:",
+          err
+        )
+
+      } finally {
+
+        setLoading(false)
+      }
+    }
+
+  fetchRecord()
+
+}, [offerId])
   
-  const record = useMemo(() => (offerId ? getOfferRecord(offerId) : null), [offerId])
+  
 
   // Simple validation check
   const idLooksValid = offerId?.startsWith("CPL/")
@@ -69,11 +124,11 @@ export default function VerifyDocument() {
                Candidate Information
              </h3>
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <DetailCard label="Candidate Name" value={record?.studentName} />
+                <DetailCard label="Candidate Name" value={record?.student_name} />
                 <DetailCard label="Student ID / PRN" value={record?.prn} />
                 <DetailCard label="College / University" value={record?.college} />
-                <DetailCard label="Internship Domain" value={record?.domainName} />
-                <DetailCard label="Timeline" value={record ? `${record.startDate} — ${record.endDate}` : null} />
+                <DetailCard label="Internship Domain" value={record?.domain_name} />
+                <DetailCard label="Timeline" value={record ? `${record.start_date} — ${record.end_date}` : null} />
                 <DetailCard label="Training Mode" value={record?.mode} />
              </div>
           </div>
