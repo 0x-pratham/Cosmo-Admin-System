@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import OfferLetter from "@/components/letter/OfferLetter"
+import OfferLetter from "@/components/documents/offer-letter/OfferLetter"
 import LoadingButton from "@/components/ui/LoadingButton"
 import { useAuth } from "@/context/AuthContext"
 import { domains } from "@/data/domains"
