@@ -111,8 +111,6 @@ export default function OfferLetter({
               </p>
             </div>
 
-            {/* Structured Responsibilities Specifications */}
-            <section className="mt-6 space-y-4 no-break">
               <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3.5" style={{ color: colors.primary }}>
                   Core Responsibilities & Deliverables
@@ -128,7 +126,7 @@ export default function OfferLetter({
               </div>
 
               {/* Balanced Professional Compliance & Termination Clause */}
-              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
+              <div className="border p-5 rounded-xl mt-6" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   1. Terms of Engagement & Professional Conduct
                 </h4>
@@ -136,7 +134,7 @@ export default function OfferLetter({
                   This engagement is subject to compliance with organizational regulations, operational protocols, and data protection rules. Cosmolix Private Limited reserves the absolute right to revoke this offer or terminate the internship immediately, without prior notification, in the event of any verified breach of confidentiality, non-compliance with project guidelines, or behavior inconsistent with standard corporate code of conduct.
                 </p>
               </div>
-              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
+              <div className="border p-5 rounded-xl mt-6 " style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   2. Intellectual Property Rights & Non-Disclosure (NDA)
                 </h4>
@@ -146,7 +144,7 @@ export default function OfferLetter({
               </div>
 
               {/* Execution Metrics Frame */}
-              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
+              <div className="border p-5 rounded-xl mt-6" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   3. Sprint Commitments & Performance Evaluation
                 </h4>
@@ -156,7 +154,7 @@ export default function OfferLetter({
               </div>
 
               {/* Candidate Sign-off Box */}
-              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
+              <div className="border p-5 rounded-xl mt-6" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-1.5" style={{ color: colors.accent }}>
                   4. Candidate Declaration of Acceptance
                 </h4>
@@ -168,7 +166,6 @@ export default function OfferLetter({
                   <p><span style={{ color: colors.textMuted }}>Date of Acceptance:</span> ____ / ____ / 2026</p>
                 </div>
               </div>
-            </section>
           </main>
 
           {/* Streamlined, Minimal Document Verification Row */}
