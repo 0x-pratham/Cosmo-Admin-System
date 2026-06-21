@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { useLocation } from "react-router-dom"
-import logo from "@/assets/logo/logo.png"
+import logo from "@/assets/logo/logo.jpg"
 import { supabase } from "@/lib/supabase"
 
 function parseOfferIdFromPath(pathname) {

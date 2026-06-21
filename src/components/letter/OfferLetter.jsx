@@ -1,4 +1,4 @@
-import logo from "@/assets/logo/logo.png"
+import logo from "@/assets/logo/logo.jpg"
 import stamp1 from "@/assets/stamps/stamp1.png"
 import signature from "@/assets/signatures/signature.png"
 import VerificationQR from "@/components/ui/VerificationQR"
@@ -11,7 +11,6 @@ export default function OfferLetter({
   domainKey = "cybersecurity",
   startDate = "22 May 2026",
   endDate = "22 August 2026",
-  mode = "Hybrid",
   offerId = "CPL/INT/2026/001",
 }) {
   const domain = domains[domainKey] ?? domains.cybersecurity
@@ -22,220 +21,156 @@ export default function OfferLetter({
     year: "numeric",
   })
 
+  // Theme colors derived directly from the Cosmolix logo
   const colors = {
-    navy: "#0f172a",
-    slate: "#1e293b",
-    textLight: "#64748b",
-    border: "#e2e8f0",
-    accent: "#b45309",
-    watermark: "rgba(203, 213, 225, 0.25)",
-    bgSlate: "#f8fafc"
+    primary: "#1A1A1A",      // Dark Charcoal from Logo
+    accent: "#D96B27",       // Deep Cosmic Orange from Logo
+    accentLight: "#E08E45",  // Soft Amber from Logo Gradient
+    textMain: "#2D3748",     // Deep professional grey for body text
+    textMuted: "#718096",    // Slate grey for captions/metadata
+    border: "#E2E8F0",       // Subtle divider line color
   }
-
-  const watermarkStyle = {
-    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1000' opacity='0.1'><text x='50%' y='50%' font-weight='bold' font-size='100' font-family='sans-serif' fill='%23cbd5e1' text-anchor='middle' transform='rotate(-24, 400, 500)'>COSMOLIX</text></svg>")`,
-    backgroundRepeat: "repeat-y",
-    backgroundPosition: "center top",
-    backgroundSize: "794px 1123px",
-  };
 
   return (
     <div className="bg-[#e8ecf2] min-h-screen flex justify-center py-10 px-4 print:bg-white print:py-0">
       <div
         id="offer-letter"
         className="relative bg-white w-[794px] min-h-[1123px] overflow-hidden shadow-2xl offer-letter-page"
-        style={{ color: colors.slate, backgroundColor: "#ffffff" , ...watermarkStyle }}
+        style={{ color: colors.textMain, fontFamily: "'Inter', sans-serif" }}
       >
-        {/* Top Gradient Bar */}
+        {/* Formal Corporate Letterhead Header Rule */}
         <div
-          className="h-1.5 w-full"
-          style={{ background: `linear-gradient(to right, #0f172a, #1e3a5f, #b45309)` }}
+          className="h-2 w-full"
+          style={{ background: `linear-gradient(to right, ${colors.primary}, ${colors.accent}, ${colors.accentLight})` }}
         />
 
-        <div className="relative z-10 px-12 py-10">
-          <header className="flex items-start justify-between gap-8 border-b pb-8 no-break" style={{ borderColor: "#e2e8f0" }}>
-            <div className="flex items-center gap-5 min-w-0">
-              {/* Logo Container - Enforced Square Dimensions */}
-              <div
-                className="shrink-0 rounded-2xl border shadow-sm"
-                style={{
-                  borderColor: "#e2e8f0",
-                  backgroundColor: "#ffffff",
-                  width: "90px",
-                  height: "90px",
-                  display: "table-cell", // Table-cell is often more stable for PDF engine centering
-                  verticalAlign: "middle",
-                  textAlign: "center"
-                }}
-              >
-                <img
-                  src={logo}
-                  alt="Cosmolix"
-                  style={{ width: "90px", height: "70px", objectFit: "contain", display: "inline-block", marginTop: "10px" }}
-                />
-              </div>
-
-              <div className="min-w-0">
-                <p className="text-[10px] uppercase tracking-[0.35em] font-semibold" style={{ color: "#64748b" }}>
-                  Offer of internship
-                </p>
-
-                <h1 className="text-[28px] font-bold tracking-tight leading-tight mt-1" style={{ color: "#0f172a" }}>
-                  Cosmolix Private Limited
+        <div className="px-14 py-12">
+          {/* Header Section */}
+          <header className="flex items-center justify-between border-b pb-6 no-break" style={{ borderColor: colors.border }}>
+            <div className="flex items-center gap-4">
+              <img
+                src={logo}
+                alt="Cosmolix Logo"
+                style={{ width: "60px", height: "60px", objectFit: "contain" }}
+              />
+              <div>
+                <h1 className="text-[24px] font-extrabold tracking-tight uppercase" style={{ color: colors.primary }}>
+                  Cosmolix <span style={{ color: colors.accent }}>Private Limited</span>
                 </h1>
-
-                <p className="text-[13px] mt-2 leading-snug max-w-md" style={{ color: "#475569" }}>
-                  Industry-oriented internship & research program · Structured
-                  mentorship & evaluation
+                <p className="text-[11px] font-mono tracking-wider font-semibold mt-0.5" style={{ color: colors.textMuted }}>
+                  CIN: U62099PN2026PTC252282
                 </p>
               </div>
             </div>
 
-            <div className="shrink-0 text-right">
-              {/* Reference Box - Simplified Flat Structure to prevent content loss */}
-              <div
-                className="rounded-2xl border shadow-sm text-left"
-                style={{
-                  borderColor: "#e2e8f0",
-                  backgroundColor: "#f8fafc",
-                  width: "220px",
-                  overflow: "hidden"
-                }}
-              >
-                {/* Top Section */}
-                <div style={{ padding: "16px 20px" }}>
-                  <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: "#64748b", margin: "0 0 4px 0" }}>
-                    Reference
-                  </p>
-                  <p className="font-mono text-[14px] font-bold tracking-wide" style={{ color: "#0f172a", margin: "0" }}>
-                    {offerId}
-                  </p>
-
-                  <div style={{ height: "1px", backgroundColor: "#e2e8f0", margin: "16px 0" }} />
-
-                  <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: "#64748b", margin: "0 0 4px 0" }}>
-                    Date of issue
-                  </p>
-                  <p className="text-[14px] font-semibold" style={{ color: "#0f172a", margin: "0" }}>
-                    {currentDate}
-                  </p>
-                </div>
-
-                {/* Bottom Badge - Solid block instead of flex badge for capture safety */}
-                <div
-                  style={{
-                    backgroundColor: "#0f172a",
-                    color: "#ffffff",
-                    paddingBottom: "10px",
-                    textAlign: "center"
-                  }}
-                >
-                  <p className="text-[9px] uppercase font-bold tracking-widest" style={{ margin: "0" }}>
-                    ● &nbsp; Official document
-                  </p>
-                </div>
-              </div>
+            {/* Document Identification Meta */}
+            <div className="text-right text-[11px] space-y-1.5 font-medium" style={{ color: colors.textMain }}>
+              <p><span style={{ color: colors.textMuted }}>Document Ref:</span> <span className="font-mono font-bold">{offerId}</span></p>
+              <p><span style={{ color: colors.textMuted }}>Date of Issue:</span> {currentDate}</p>
             </div>
           </header>
 
-
-          <main className="mt-10">
-            <section className="no-break">
-              <p className="text-[12px] font-bold uppercase tracking-widest" style={{ color: colors.textLight }}>To</p>
-              <div className="mt-4 space-y-1.5">
-                <p className="text-[19px] font-bold tracking-tight" style={{ color: colors.navy }}>{studentName}</p>
-                <p className="text-[14px]" style={{ color: colors.textLight }}>
-                  PRN / Student ID: <span className="font-medium" style={{ color: colors.slate }}>{prn}</span>
-                </p>
-                <p className="text-[14px] leading-relaxed max-w-lg" style={{ color: colors.textLight }}>{college}</p>
-              </div>
+          {/* Recipient Details Block */}
+          <main className="mt-8">
+            <section className="no-break bg-[#F8FAFC] border-l-4 p-5 rounded-r-xl" style={{ borderColor: colors.primary }}>
+              <p className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: colors.accent }}>
+                Appointee Profile
+              </p>
+              <h2 className="text-[20px] font-bold" style={{ color: colors.primary }}>{studentName}</h2>
             </section>
 
-            <section className="mt-10 no-break">
-              <div className="inline-flex items-center border-l-4 pl-4 py-1" style={{ borderColor: colors.accent }}>
-                <h2 className="text-[18px] font-bold tracking-tight" style={{ color: colors.navy }}>
-                  Subject: Internship offer letter
-                </h2>
-              </div>
+            {/* Formal Concise Subject */}
+            <section className="mt-8 no-break">
+              <h3 className="text-[15px] font-bold uppercase tracking-wide border-b pb-2" style={{ color: colors.primary, borderColor: colors.border }}>
+                Subject: Internship Offer Letter
+              </h3>
             </section>
 
-            <div className="mt-8 text-[14px] leading-[1.75] space-y-5" style={{ color: "#334155" }}>
-              <p>Dear <span className="font-semibold" style={{ color: colors.navy }}>{studentName}</span>,</p>
+            {/* Formal Body Paragraphs */}
+            <div className="mt-6 text-[13.5px] leading-[1.8] space-y-4 text-justify" style={{ color: colors.textMain }}>
+              <p>Dear {studentName},</p>
+              
               <p>
-                We are pleased to offer you a place on the internship program at{" "}
-                <span className="font-semibold" style={{ color: colors.navy }}>Cosmolix Private Limited</span> as a{" "}
-                <span className="font-semibold" style={{ color: colors.navy }}>{domain.role}</span> in{" "}
-                <span className="font-semibold" style={{ color: colors.navy }}>{domain.domainName}</span>.
+                Following your formal execution of our technical evaluation, we are pleased to extend this offer of internship with <strong>Cosmolix Private Limited</strong>. Upon confirmation of acceptance, you shall assume the operational responsibilities of <strong style={{ color: colors.accent }}>{domain.role}</strong>, operating within the architecture of our <strong>{domain.domainName}</strong> team.
               </p>
+              
               <p>
-                Your engagement is expected to begin on <b>{startDate}</b> and conclude on <b>{endDate}</b>. Delivery will be in <b>{mode}</b> mode, with guided mentorship, project work, and structured professional development.
+                Your professional tenure is scheduled to commence on <strong>{startDate}</strong> and terminate automatically on <strong>{endDate}</strong> unless modified or renewed in writing by authorized personnel. This engagement requires systematic sprint management, execution of assignments, and strict alignment with organizational delivery deadlines.
               </p>
-              <p>{domain.overview}</p>
+              
+              <p>
+                As a designated member of our technical division, you will be expected to protect corporate intellectual property, maintain confidentiality regarding proprietary codebases, and maintain a high standard of professional code hygiene and documentation.
+              </p>
             </div>
 
-            <section className="mt-12 no-break">
-              <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: colors.textLight }}>Technologies & tools</h3>
-              <div className="flex flex-wrap gap-2">
-                {domain.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="rounded-md border px-3 py-1.5 text-[12px] font-medium"
-                    style={{ borderColor: colors.border, backgroundColor: colors.bgSlate, color: "#334155" }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </section>
-
-            <section className="mt-12 no-break" style={{ paddingTop: "40px" }}>
-              <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] mb-5" style={{ color: colors.textLight }}>Internship exposure</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {domain.activities.map((activity, index) => (
-                  <div
-                    key={index}
-                    className="rounded-xl border bg-white px-4 py-3.5 shadow-sm"
-                    style={{ borderColor: "rgba(226, 232, 240, 0.9)" }}
-                  >
-                    <div className="flex gap-3">
+            {/* Structured Responsibilities Specifications */}
+            <section className="mt-6 space-y-4 no-break">
+              <div className="border p-5 rounded-xl bg-white shadow-sm" style={{ borderColor: colors.border }}>
+                <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3.5" style={{ color: colors.primary }}>
+                  Core Responsibilities & Deliverables
+                </h4>
+                <ul className="text-[12.5px] space-y-2.5 text-slate-700 list-none pl-0">
+                  {domain.activities.map((activity, index) => (
+                    <li key={index} className="flex items-start gap-2.5 leading-relaxed font-medium">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: colors.accent }} />
-                      <p className="text-[13px] font-semibold leading-snug" style={{ color: colors.navy }}>{activity}</p>
-                    </div>
-                  </div>
-                ))}
+                      <span>{activity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Balanced Professional Compliance & Termination Clause */}
+              <div className="border p-5 rounded-xl bg-[#F8FAFC]" style={{ borderColor: colors.border }}>
+                <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
+                  Terms of Engagement & Professional Conduct
+                </h4>
+                <p className="text-[12.5px] leading-relaxed text-slate-700 text-justify font-medium">
+                  This engagement is subject to compliance with organizational regulations, operational protocols, and data protection rules. Cosmolix Private Limited reserves the absolute right to revoke this offer or terminate the internship immediately, without prior notification, in the event of any verified breach of confidentiality, non-compliance with project guidelines, or behavior inconsistent with standard corporate code of conduct.
+                </p>
               </div>
             </section>
           </main>
 
-          {/* Signatures and Seals Section */}
-          <div className="mt-16 no-break">
-            {/* Full-width Verification QR Row */}
-            <div className="mb-10 w-full">
-              <VerificationQR offerId={offerId} />
+          {/* Streamlined, Minimal Document Verification Row */}
+          <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
+            <div className="flex items-center gap-5 bg-[#F8FAFC] border p-4 rounded-xl" style={{ borderColor: colors.border }}>
+              <div className="shrink-0 bg-white p-2 rounded-lg border">
+                <VerificationQR offerId={offerId} />
+              </div>
+              <div className="space-y-0.5">
+                <h4 className="text-[13px] font-bold uppercase tracking-wider" style={{ color: colors.primary }}>
+                  Document Verification
+                </h4>
+                <p className="text-[13px] font-medium leading-relaxed" style={{ color: colors.textMain }}>
+                  Scan this QR to verify this offer letter was issued by Cosmolix Private Limited.
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col-reverse sm:flex-row items-end justify-between gap-10">
+            {/* Signatures & Execution Section */}
+            <div className="mt-8 flex items-end justify-between gap-10">
               <div className="text-center sm:text-left">
-                <img src={stamp1} alt="Official seal" className="max-h-36 w-auto opacity-95" />
-                <p className="text-[10px] uppercase tracking-widest mt-2 font-medium" style={{ color: colors.textLight }}>
-                  Official company seal
+                <img src={stamp1} alt="Official Seal" className="max-h-24 w-auto mix-blend-multiply opacity-95" />
+                <p className="text-[10px] uppercase tracking-wider font-bold mt-2" style={{ color: colors.textMuted }}>
+                  Corporate Seal Affixed
                 </p>
               </div>
 
-              <div className="text-right sm:w-auto">
-                <img src={signature} alt="Authorized signatory" className="w-48 ml-auto opacity-95" />
-                <div className="mt-3 border-t pt-3 inline-block min-w-[220px]" style={{ borderColor: colors.navy }}>
-                  <p className="font-bold text-[16px]" style={{ color: colors.navy }}>Prathamesh Bhil</p>
-                  <p className="text-[13px]" style={{ color: colors.textLight }}>Founder & Chief Executive Officer</p>
-                  <p className="text-[13px]" style={{ color: colors.textLight }}>Cosmolix Private Limited</p>
+              <div className="text-right">
+                <img src={signature} alt="Authorized Signatory" className="w-36 ml-auto mix-blend-multiply" />
+                <div className="mt-1 border-t w-56 pt-2 ml-auto" style={{ borderColor: colors.primary }}>
+                  <p className="font-bold text-[14px]" style={{ color: colors.primary }}>Prathamesh Bhil</p>
+                  <p className="text-[12px] font-medium" style={{ color: colors.textMuted }}>Chief Executive Officer</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: colors.accent }}>Cosmolix Private Limited</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <footer className="mt-14 flex items-center justify-between border-t pt-6 text-[11px]" style={{ borderColor: colors.border, color: colors.textLight }}>
-            <span>© {new Date().getFullYear()} Cosmolix Private Limited</span>
-            <span className="font-medium">Electronically issued document</span>
+          {/* Clean Corporate Footer */}
+          <footer className="mt-10 flex items-center justify-between border-t pt-4 text-[11px]" style={{ borderColor: colors.border, color: colors.textMuted }}>
+            <span>© {new Date().getFullYear()} Cosmolix Private Limited..</span>
+            <span className="font-medium tracking-wide uppercase text-[10px]">Registered Office Location: Ambethan , Khed , Pune-410501 Maharashtra</span>
           </footer>
         </div>
       </div>
