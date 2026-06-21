@@ -2,7 +2,7 @@ export const domains = {
   fullstack: {
     domainName: "Full Stack Web Development",
 
-    role: "Development Intern",
+    role: "Full Stack Development Intern",
 
     duration: "3 Months",
 
@@ -44,7 +44,7 @@ export const domains = {
   },
 
   ai_ml: {
-    domainName: "Machine Learning & Artificial Intelligence",
+    domainName: "ML & Artificial Intelligence",
 
     role: "AI/ML Research Intern",
 
@@ -134,7 +134,7 @@ export const domains = {
   mobileapp: {
     domainName: "Mobile App Development",
 
-    role: "Mobile Application Development Intern",
+    role: "Application Development Intern",
 
     duration: "3 Months",
 
