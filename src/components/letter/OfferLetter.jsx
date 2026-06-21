@@ -160,7 +160,7 @@ export default function OfferLetter({
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-1.5" style={{ color: colors.accent }}>
                   4. Candidate Declaration of Acceptance
                 </h4>
-                <p className="text-[11.5px] leading-relaxed text-slate-800 text-justify">
+                <p className="text-[11.5px] leading-relaxed text-justify" style={{ color: colors.textSlate }}>
                   I have read, understood, and hereby accept the position framework, functional parameters, performance requirements, and data privacy bindings declared across this document. I commit to maintaining complete corporate decorum and operational discipline throughout my engagement path with the organization.
                 </p>
                 <div className="mt-5 flex justify-between items-center text-[12px] pt-4 border-t border-dashed" style={{ borderColor: colors.border }}>
@@ -173,7 +173,7 @@ export default function OfferLetter({
 
           {/* Streamlined, Minimal Document Verification Row */}
           <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
-          <VerificationQR offerId={offerId} />
+            <VerificationQR offerId={offerId} />
 
             {/* Signatures & Execution Section */}
             <div className="mt-8 flex items-end justify-between gap-10">
