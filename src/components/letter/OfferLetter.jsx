@@ -136,7 +136,6 @@ export default function OfferLetter({
                   This engagement is subject to compliance with organizational regulations, operational protocols, and data protection rules. Cosmolix Private Limited reserves the absolute right to revoke this offer or terminate the internship immediately, without prior notification, in the event of any verified breach of confidentiality, non-compliance with project guidelines, or behavior inconsistent with standard corporate code of conduct.
                 </p>
               </div>
-
               <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   2. Intellectual Property Rights & Non-Disclosure (NDA)
@@ -146,7 +145,7 @@ export default function OfferLetter({
                 </p>
               </div>
 
-              {/* Execution Metrics & Evaluation Framework */}
+              {/* Execution Metrics Frame */}
               <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   3. Sprint Commitments & Performance Evaluation
@@ -156,12 +155,12 @@ export default function OfferLetter({
                 </p>
               </div>
 
-              {/* Sign-off Agreement Declaration for Candidate */}
+              {/* Candidate Sign-off Box */}
               <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-1.5" style={{ color: colors.accent }}>
                   4. Candidate Declaration of Acceptance
                 </h4>
-                <p className="text-[11.5px] leading-relaxed text-slate-500 text-justify">
+                <p className="text-[11.5px] leading-relaxed text-slate-800 text-justify">
                   I have read, understood, and hereby accept the position framework, functional parameters, performance requirements, and data privacy bindings declared across this document. I commit to maintaining complete corporate decorum and operational discipline throughout my engagement path with the organization.
                 </p>
                 <div className="mt-5 flex justify-between items-center text-[12px] pt-4 border-t border-dashed" style={{ borderColor: colors.border }}>
