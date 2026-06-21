@@ -21,7 +21,7 @@ export default function OfferLetter({
     year: "numeric",
   })
 
-  // Theme colors derived directly from the Cosmolix logo
+  // Theme colors derived directly from the Cosmolix logo using strictly safe Hex formats
   const colors = {
     primary: "#1A1A1A",      // Dark Charcoal from Logo
     accent: "#D96B27",       // Deep Cosmic Orange from Logo
@@ -32,13 +32,13 @@ export default function OfferLetter({
   }
 
   return (
-    <div className="bg-[#e8ecf2] min-h-screen flex justify-center py-10 px-4 print:bg-white print:py-0">
+    <div style={{ backgroundColor: "#e8ecf2" }} className="min-h-screen flex justify-center py-10 px-4 print:bg-white print:py-0">
       <div
         id="offer-letter"
         className="relative bg-white w-[794px] min-h-[1123px] overflow-hidden shadow-2xl offer-letter-page"
-        style={{ color: colors.textMain, fontFamily: "'Inter', sans-serif" }}
+        style={{ color: colors.textMain, fontFamily: "'Inter', sans-serif", backgroundColor: "#ffffff" }}
       >
-        {/* Formal Corporate Letterhead Header Rule */}
+        {/* Formal Corporate Letterhead Header Rule using legacy Hex gradients */}
         <div
           className="h-2 w-full"
           style={{ background: `linear-gradient(to right, ${colors.primary}, ${colors.accent}, ${colors.accentLight})` }}
@@ -72,7 +72,7 @@ export default function OfferLetter({
 
           {/* Recipient Details Block */}
           <main className="mt-8">
-            <section className="no-break bg-[#F8FAFC] border-l-4 p-5 rounded-r-xl" style={{ borderColor: colors.primary }}>
+            <section className="no-break border-l-4 p-5 rounded-r-xl" style={{ borderColor: colors.primary, backgroundColor: "#F8FAFC" }}>
               <p className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: colors.accent }}>
                 Appointee Profile
               </p>
@@ -105,7 +105,7 @@ export default function OfferLetter({
 
             {/* Structured Responsibilities Specifications */}
             <section className="mt-6 space-y-4 no-break">
-              <div className="border p-5 rounded-xl bg-white shadow-sm" style={{ borderColor: colors.border }}>
+              <div className="border p-5 rounded-xl shadow-sm" style={{ borderColor: colors.border, backgroundColor: "#ffffff" }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3.5" style={{ color: colors.primary }}>
                   Core Responsibilities & Deliverables
                 </h4>
@@ -120,7 +120,7 @@ export default function OfferLetter({
               </div>
 
               {/* Balanced Professional Compliance & Termination Clause */}
-              <div className="border p-5 rounded-xl bg-[#F8FAFC]" style={{ borderColor: colors.border }}>
+              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: "#F8FAFC" }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   Terms of Engagement & Professional Conduct
                 </h4>
@@ -133,8 +133,8 @@ export default function OfferLetter({
 
           {/* Streamlined, Minimal Document Verification Row */}
           <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
-            <div className="flex items-center gap-5 bg-[#F8FAFC] border p-4 rounded-xl" style={{ borderColor: colors.border }}>
-              <div className="shrink-0 bg-white p-2 rounded-lg border">
+            <div className="flex items-center gap-5 border p-4 rounded-xl" style={{ borderColor: colors.border, backgroundColor: "#F8FAFC" }}>
+              <div className="shrink-0 p-2 rounded-lg border" style={{ backgroundColor: "#ffffff" }}>
                 <VerificationQR offerId={offerId} />
               </div>
               <div className="space-y-0.5">
@@ -169,7 +169,7 @@ export default function OfferLetter({
 
           {/* Clean Corporate Footer */}
           <footer className="mt-10 flex items-center justify-between border-t pt-4 text-[11px]" style={{ borderColor: colors.border, color: colors.textMuted }}>
-            <span>© {new Date().getFullYear()} Cosmolix Private Limited..</span>
+            <span>© {new Date().getFullYear()} Cosmolix Private Limited. Corporate Identity Protected.</span>
             <span className="font-medium tracking-wide uppercase text-[10px]">Registered Office Location: Ambethan , Khed , Pune-410501 Maharashtra</span>
           </footer>
         </div>
