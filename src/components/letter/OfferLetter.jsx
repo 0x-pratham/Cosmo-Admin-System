@@ -134,7 +134,7 @@ export default function OfferLetter({
                   This engagement is subject to compliance with organizational regulations, operational protocols, and data protection rules. Cosmolix Private Limited reserves the absolute right to revoke this offer or terminate the internship immediately, without prior notification, in the event of any verified breach of confidentiality, non-compliance with project guidelines, or behavior inconsistent with standard corporate code of conduct.
                 </p>
               </div>
-              <div className="border p-5 rounded-xl mt-6 " style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
+              <div className="border p-5 rounded-xl mt-24 " style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
                   2. Intellectual Property Rights & Non-Disclosure (NDA)
                 </h4>
