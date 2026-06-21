@@ -130,15 +130,49 @@ export default function OfferLetter({
               {/* Balanced Professional Compliance & Termination Clause */}
               <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
-                  Terms of Engagement & Professional Conduct
+                  1. Terms of Engagement & Professional Conduct
                 </h4>
                 <p className="text-[12.5px] leading-relaxed text-justify font-medium" style={{ color: colors.textSlate }}>
                   This engagement is subject to compliance with organizational regulations, operational protocols, and data protection rules. Cosmolix Private Limited reserves the absolute right to revoke this offer or terminate the internship immediately, without prior notification, in the event of any verified breach of confidentiality, non-compliance with project guidelines, or behavior inconsistent with standard corporate code of conduct.
                 </p>
               </div>
+
+              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
+                <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
+                  2. Intellectual Property Rights & Non-Disclosure (NDA)
+                </h4>
+                <p className="text-[12px] leading-relaxed text-justify font-medium" style={{ color: colors.textSlate }}>
+                  All software code, designs, documentation, strategies, algorithms, or internal cloud configurations developed, refined, or interacted with during your tenure remain the exclusive intellectual property of Cosmolix Private Limited. You are prohibited from staging, replicating, or leaking company source codes to third parties or open public networks. Unauthorized code sharing or preservation after termination is subject to formal legal proceedings under applicable cybersecurity and corporate safety provisions.
+                </p>
+              </div>
+
+              {/* Execution Metrics & Evaluation Framework */}
+              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
+                <h4 className="text-[12px] font-bold uppercase tracking-wider mb-2" style={{ color: colors.primary }}>
+                  3. Sprint Commitments & Performance Evaluation
+                </h4>
+                <p className="text-[12px] leading-relaxed text-justify font-medium" style={{ color: colors.textSlate }}>
+                  Appointees are expected to actively participate in all scheduled technical synchronization meets, architecture updates, and deliver code components on target timeline tracks. Performance assessments will occur dynamically throughout the internship timeframe. Final corporate certification, evaluation scoring records, and recommendation validations are issued exclusively upon successful verification of complete code submission, system hygiene tests, and project clearance reviews.
+                </p>
+              </div>
+
+              {/* Sign-off Agreement Declaration for Candidate */}
+              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
+                <h4 className="text-[12px] font-bold uppercase tracking-wider mb-1.5" style={{ color: colors.accent }}>
+                  4. Candidate Declaration of Acceptance
+                </h4>
+                <p className="text-[11.5px] leading-relaxed text-slate-500 text-justify">
+                  I have read, understood, and hereby accept the position framework, functional parameters, performance requirements, and data privacy bindings declared across this document. I commit to maintaining complete corporate decorum and operational discipline throughout my engagement path with the organization.
+                </p>
+                <div className="mt-5 flex justify-between items-center text-[12px] pt-4 border-t border-dashed" style={{ borderColor: colors.border }}>
+                  <p><span style={{ color: colors.textMuted }}>Candidate Signature:</span> ___________________</p>
+                  <p><span style={{ color: colors.textMuted }}>Date of Acceptance:</span> ____ / ____ / 2026</p>
+                </div>
+              </div>
             </section>
           </main>
 
+          {/* Streamlined, Minimal Document Verification Row */}
           <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
           <VerificationQR offerId={offerId} />
 
