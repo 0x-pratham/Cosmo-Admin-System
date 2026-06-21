@@ -173,7 +173,7 @@ export default function OfferLetter({
             <VerificationQR offerId={offerId} />
 
             {/* Signatures & Execution Section */}
-            <div className="mt-8 flex items-end justify-between gap-10">
+            <div className="mt-4 flex items-end justify-between gap-10">
               <div className="text-center sm:text-left">
                 <img src={stamp1} alt="Official Seal" className="max-h-24 w-auto mix-blend-multiply opacity-95" />
                 <p className="text-[10px] uppercase tracking-wider font-bold mt-2" style={{ color: colors.textMuted }}>
