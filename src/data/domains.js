@@ -30,8 +30,6 @@ export const domains = {
       "Database Integration Workflow",
       "Authentication System Implementation",
       "Git & GitHub Collaboration",
-      "Responsive Web Design",
-      "Project Deployment Workflow",
       "Real-Time Project Simulation"
     ],
 
@@ -75,8 +73,6 @@ export const domains = {
       "Data Processing & Analysis",
       "AI Workflow Understanding",
       "Predictive Model Implementation",
-      "Dataset Handling",
-      "Research-Oriented Tasks",
       "Model Evaluation & Optimization",
       "Practical AI Project Development"
     ],
@@ -122,8 +118,6 @@ export const domains = {
       "Web Security Testing",
       "OSINT Investigation Workflow",
       "Cybersecurity Reporting",
-      "Security Tool Exposure",
-      "Ethical Hacking Methodologies",
       "Simulated Security Assessments"
     ],
 
@@ -168,8 +162,6 @@ export const domains = {
       "Application Navigation Systems",
       "Responsive Mobile Interface Design",
       "Project-Based App Development",
-      "Testing & Debugging",
-      "Collaborative Workflow Participation",
       "Deployment Preparation"
     ],
 
@@ -214,8 +206,6 @@ export const domains = {
       "IoT Device Communication",
       "Automation Project Development",
       "Hardware-Software Interaction",
-      "Smart System Implementation",
-      "Project Documentation",
       "Practical IoT Experimentation"
     ],
 
@@ -260,8 +250,6 @@ export const domains = {
       "Dataset Cleaning & Processing",
       "Analytical Reporting",
       "Dashboard Creation",
-      "Statistical Interpretation",
-      "Business Data Understanding",
       "Project-Based Analytics"
     ],
 

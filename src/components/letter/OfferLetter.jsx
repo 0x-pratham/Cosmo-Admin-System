@@ -139,21 +139,8 @@ export default function OfferLetter({
             </section>
           </main>
 
-          {/* Streamlined, Minimal Document Verification Row */}
           <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
-            <div className="flex items-center gap-5 border p-4 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgPanel }}>
-              <div className="shrink-0 p-2 rounded-lg border" style={{ backgroundColor: colors.bgCard, borderColor: colors.border }}>
-                <VerificationQR offerId={offerId} />
-              </div>
-              <div className="space-y-0.5">
-                <h4 className="text-[13px] font-bold uppercase tracking-wider" style={{ color: colors.primary }}>
-                  Document Verification
-                </h4>
-                <p className="text-[13px] font-medium leading-relaxed" style={{ color: colors.textMain }}>
-                  Scan this QR to verify this offer letter was issued by Cosmolix Private Limited.
-                </p>
-              </div>
-            </div>
+          <VerificationQR offerId={offerId} />
 
             {/* Signatures & Execution Section */}
             <div className="mt-8 flex items-end justify-between gap-10">
