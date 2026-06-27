@@ -74,7 +74,7 @@ export default function OfferLetter({
             {/* Document Identification Meta */}
             <div className="text-right text-[11px] space-y-1.5 font-medium" style={{ color: colors.textMain }}>
               <p><span style={{ color: colors.textMuted }}>Document Ref:</span> <span className="font-mono font-bold">{offerId}</span></p>
-              {/* <p><span style={{ color: colors.textMuted }}>Date of Issue:</span> {currentDate}</p> */}
+              <p><span style={{ color: colors.textMuted }}>Date of Issue:</span> {currentDate}</p>
             </div>
           </header>
 
@@ -170,6 +170,7 @@ export default function OfferLetter({
 
           {/* Streamlined, Minimal Document Verification Row */}
           <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
+            <VerificationQR offerId={offerId} />
 
             {/* Signatures & Execution Section */}
             <div className="mt-4 flex items-end justify-between gap-10">
