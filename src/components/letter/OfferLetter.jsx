@@ -74,7 +74,7 @@ export default function OfferLetter({
             {/* Document Identification Meta */}
             <div className="text-right text-[11px] space-y-1.5 font-medium" style={{ color: colors.textMain }}>
               <p><span style={{ color: colors.textMuted }}>Document Ref:</span> <span className="font-mono font-bold">{offerId}</span></p>
-              <p><span style={{ color: colors.textMuted }}>Date of Issue:</span> {currentDate}</p>
+              {/* <p><span style={{ color: colors.textMuted }}>Date of Issue:</span> {currentDate}</p> */}
             </div>
           </header>
 
@@ -107,11 +107,11 @@ export default function OfferLetter({
               </p>
               
               <p>
-                As a designated member of our technical division, you will be expected to protect corporate intellectual property, maintain confidentiality regarding proprietary codebases, and maintain a high standard of professional code hygiene and documentation.
+                As a designated member of our technical division, you will be expected to protect corporate intellectual property, maintain confidentiality regarding proprietary codebases, and maintain a high standard of professional code.
               </p>
             </div>
 
-              <div className="border p-5 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
+              <div className="border p-5 mt-3 rounded-xl" style={{ borderColor: colors.border, backgroundColor: colors.bgCard }}>
                 <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3.5" style={{ color: colors.primary }}>
                   Core Responsibilities & Deliverables
                 </h4>
@@ -170,7 +170,6 @@ export default function OfferLetter({
 
           {/* Streamlined, Minimal Document Verification Row */}
           <div className="mt-5 no-break border-t pt-6" style={{ borderColor: colors.border }}>
-            <VerificationQR offerId={offerId} />
 
             {/* Signatures & Execution Section */}
             <div className="mt-4 flex items-end justify-between gap-10">
