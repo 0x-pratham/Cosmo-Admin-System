@@ -107,7 +107,7 @@ export default function Certificate({
               marginBottom: "6px",
             }}
           >
-            Certificate No.
+            Credential No.
           </p>
           <p
             style={{
@@ -168,7 +168,7 @@ export default function Certificate({
               fontWeight: 600,
               color: "#171613",
               margin: "6px 0 10px",
-              borderBottom: "2px solid #E8934A",
+              borderBottom: "2px solid #0c0600",
               display: "inline-block",
               paddingBottom: "4px",
             }}
