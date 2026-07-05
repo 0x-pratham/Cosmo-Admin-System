@@ -5,6 +5,7 @@ import { AuthProvider } from "@/context/AuthContext"
 import Dashboard from "@/pages/Dashboard"
 import Login from "@/pages/Login"
 import VerifyDocument from "@/pages/VerifyDocument"
+import CertificateDashboard from "@/pages/CertificateDashboard"
 
 export default function App() {
   return (
@@ -22,6 +23,8 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/certificates" element={<CertificateDashboard />} />
 
         <Route
           path="/verify/*"
