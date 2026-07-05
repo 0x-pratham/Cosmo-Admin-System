@@ -24,6 +24,7 @@
 import logo from "@/assets/logo/logo.jpg"
 import signature from "@/assets/signatures/signature.png"
 import stamp from "@/assets/stamps/stamp1.png"
+import chevron from "@/assets/logo/chevron.png"
 export default function Certificate({
   studentName = "Student Name",
   domainName = "Domain Name",
@@ -47,11 +48,11 @@ export default function Certificate({
     >
       {/* ---------- Left panel ---------- */}
       <div
-        className="absolute left-0 top-0 h-full flex flex-col justify-between"
-        style={{ width: "300px", background: "#171613", padding: "48px 36px", zIndex: 2 }}
+        className="absolute left-0 top-0 h-full"
+        style={{ width: "300px", background: "#171613", zIndex: 2 }}
       >
-        {/* Logo + wordmark */}
-        <div>
+        {/* Logo + wordmark — pinned to top */}
+        <div style={{ position: "absolute", top: "48px", left: "36px", right: "36px" }}>
           <img src={logo} alt="Cosmolix" style={{ width: "56px", height: "56px" }} />
           <p
             className="text-white"
@@ -80,24 +81,22 @@ export default function Certificate({
           </p>
         </div>
  
-        {/* Slogan, rotated along the panel */}
-        <p
+
+        <img
+          src={chevron}
+          alt=""
           style={{
-            color: "#E8934A",
-            fontSize: "13px",
-            fontWeight: 500,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            writingMode: "vertical-rl",
-            transform: "rotate(180deg)",
-            margin: "0 auto",
+            position: "absolute",
+            top: "50%",
+            left: 0,
+            width: "300px",
+            height: "auto",
+            transform: "translateY(-50%)",
           }}
-        >
-          Beyond limits.
-        </p>
+        />
  
-        {/* Certificate ID */}
-        <div>
+        {/* Certificate ID — pinned to bottom */}
+        <div style={{ position: "absolute", bottom: "78px", left: "36px", right: "36px" }}>
           <div style={{ height: "1px", background: "rgba(232,147,74,0.35)", marginBottom: "14px" }} />
           <p
             style={{
@@ -124,25 +123,6 @@ export default function Certificate({
         </div>
       </div>
  
-      {/* ---------- Oversized chevron motif, bleeding across the seam ---------- */}
-      <svg
-        width="260"
-        height="360"
-        viewBox="0 0 260 360"
-        style={{ position: "absolute", left: "185px", top: "217px", zIndex: 3 }}
-      >
-        <defs>
-          <linearGradient id="cosmolixChevron" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#B84A0F" />
-            <stop offset="100%" stopColor="#E8934A" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M20 20 L150 170 L20 320 L60 320 L200 170 L60 20 Z"
-          fill="url(#cosmolixChevron)"
-        />
-      </svg>
- 
       {/* ---------- Right / body panel ---------- */}
       <div
         className="absolute top-0 h-full flex flex-col"
@@ -150,7 +130,6 @@ export default function Certificate({
       >
         {/* Eyebrow */}
         <div className="flex items-center gap-2">
-          <span style={{ width: "6px", height: "6px", borderRadius: "999px", background: "#D2660E" }} />
           <p
             style={{
               fontSize: "12px",
@@ -178,7 +157,7 @@ export default function Certificate({
         </h1>
  
         {/* Citation */}
-        <div style={{ marginTop: "34px", maxWidth: "620px" }}>
+        <div style={{ marginTop: "34px", maxWidth: "660px" }}>
           <p style={{ fontSize: "16px", lineHeight: 1.9, color: "#3a3934" }}>
             This is to certify that
           </p>
@@ -196,14 +175,17 @@ export default function Certificate({
           >
             {studentName}
           </p>
-          <p style={{ fontSize: "16px", lineHeight: 1.9, color: "#3a3934" }}>
+          <p style={{ fontSize: "16px", lineHeight: 1.9, color: "#3a3934", textAlign: "justify" }}>
             has successfully completed an internship
             {role ? <> as <strong style={{ color: "#171613" }}>{role}</strong></> : null} in the
             domain of <strong style={{ color: "#171613" }}>{domainName}</strong> at{" "}
             <strong style={{ color: "#171613" }}>Cosmolix Private Limited</strong>, during the
             period of <strong style={{ color: "#171613" }}>{startDate}</strong> to{" "}
-            <strong style={{ color: "#171613" }}>{endDate}</strong>, demonstrating consistent
-            commitment, technical proficiency, and professional conduct throughout the program.
+            <strong style={{ color: "#171613" }}>{endDate}</strong> demonstrating strong technical
+            proficiency, consistent dedication, and sound professional conduct throughout the
+            program, reflecting a genuine commitment to excellence and continuous learning, and
+            displaying the ability to translate theoretical knowledge into practical, real-world
+            solutions.
           </p>
         </div>
  
@@ -211,7 +193,7 @@ export default function Certificate({
         <div style={{ flex: 1 }} />
  
         {/* Footer: dates + signature */}
-        <div className="flex items-end justify-between" style={{ marginTop: "24px" }}>
+        <div className="flex items-center justify-between" style={{ marginTop: "1px" }}>
           <div>
             <p style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#8a8880" }}>
               Issued on
@@ -219,14 +201,14 @@ export default function Certificate({
             <p style={{ fontSize: "15px", fontWeight: 500, marginTop: "4px" }}>{issued}</p>
           </div>
  
-          <div className="flex items-end" style={{ gap: "18px" }}>
+          <div className="flex items-end" style={{ gap: "98px" }}>
             <img
               src={stamp}
               alt=""
-              style={{ height: "76px", width: "76px", objectFit: "contain", opacity: 0.92, marginBottom: "18px" }}
+              style={{ height: "100px", width: "100px", objectFit: "contain", opacity: 0.99, marginBottom: "1px" }}
             />
             <div className="flex flex-col items-center">
-              <img src={signature} alt="Authorized signature" style={{ height: "52px", objectFit: "contain" }} />
+              <img src={signature} alt="Authorized signature" style={{ height: "82px", objectFit: "contain" }} />
               <div style={{ width: "180px", borderTop: "1px solid #c9c6bc", marginTop: "8px" }} />
               <p style={{ fontSize: "13px", fontWeight: 500, marginTop: "6px" }}>Authorized Signatory</p>
               <p style={{ fontSize: "11px", color: "#8a8880" }}>Cosmolix Private Limited</p>
@@ -234,10 +216,8 @@ export default function Certificate({
           </div>
         </div>
  
-        <p style={{ fontSize: "10px", color: "#b1afa6", marginTop: "22px" }}>
-          This is a computer-generated certificate issued by Cosmolix Private Limited.
-        </p>
       </div>
     </div>
   )
 }
+ 
