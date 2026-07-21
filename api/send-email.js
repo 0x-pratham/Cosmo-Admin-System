@@ -14,12 +14,10 @@ export default async function handler(req, res) {
     const {
       studentName,
       studentEmail,
-      college,
       domainName,
       role,
       startDate,
       endDate,
-      mode,
       offerId,
       verificationLink,
     } = req.body;
@@ -48,57 +46,90 @@ export default async function handler(req, res) {
                 Your application has been successfully approved by Cosmolix Private Limited. We are delighted to welcome you to our Internship Program.
               </p>
 
-              <!-- Elegant Offer Details Card -->
+              <!-- Elegant Offer Details Card (Fluid Hybrid Layout without Media Queries) -->
               <div style="background-color: #FCFBFA; border: 1px solid #EAE3D9; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
                 <h3 style="color: #1A1613; margin-top: 0; margin-bottom: 20px; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #EAE3D9; padding-bottom: 8px;">Offer Summary</h3>
-                <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 14px;">
+                
+                <!-- Row 1: Role & Domain -->
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td width="50%" style="padding-bottom: 16px; vertical-align: top;">
-                      <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Position Role</p>
-                      <p style="color: #1A1613; font-weight: 600; margin: 0;">${role}</p>
-                    </td>
-                    <td width="50%" style="padding-bottom: 16px; vertical-align: top;">
-                      <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Domain/Department</p>
-                      <p style="color: #1A1613; font-weight: 600; margin: 0;">${domainName}</p>
+                    <td style="font-size:0; text-align:left;">
+                      <!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="50%" valign="top"><![endif]-->
+                      <div style="display:inline-block; width:100%; max-width:270px; vertical-align:top;">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="padding-bottom: 16px; font-size: 14px;">
+                              <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Position Role</p>
+                              <p style="color: #1A1613; font-weight: 600; margin: 0;">${role}</p>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--[if mso]></td><td width="50%" valign="top"><![endif]-->
+                      <div style="display:inline-block; width:100%; max-width:270px; vertical-align:top;">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="padding-bottom: 16px; font-size: 14px;">
+                              <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Domain/Department</p>
+                              <p style="color: #1A1613; font-weight: 600; margin: 0;">${domainName}</p>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--[if mso]></td></tr></table><![endif]-->
                     </td>
                   </tr>
+                </table>
+
+                <!-- Row 2: Reference ID & Duration -->
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
                   <tr>
-                    <td width="50%" style="padding-bottom: 16px; vertical-align: top;">
-                      <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Institution</p>
-                      <p style="color: #1A1613; font-weight: 600; margin: 0;">${college}</p>
-                    </td>
-                    <td width="50%" style="padding-bottom: 16px; vertical-align: top;">
-                      <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Work Mode</p>
-                      <p style="color: #1A1613; font-weight: 600; margin: 0;">${mode}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="50%" style="padding-bottom: 4px; vertical-align: top;">
-                      <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Reference ID</p>
-                      <p style="color: #1A1613; font-weight: 600; margin: 0; font-family: monospace;">${offerId}</p>
-                    </td>
-                    <td width="50%" style="padding-bottom: 4px; vertical-align: top;">
-                      <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Duration</p>
-                      <p style="color: #1A1613; font-weight: 600; margin: 0;">${startDate} &rarr; ${endDate}</p>
+                    <td style="font-size:0; text-align:left;">
+                      <!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="50%" valign="top"><![endif]-->
+                      <div style="display:inline-block; width:100%; max-width:270px; vertical-align:top;">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="padding-bottom: 8px; font-size: 14px;">
+                              <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Reference ID</p>
+                              <p style="color: #1A1613; font-weight: 600; margin: 0; font-family: monospace; word-break: break-word;">${offerId}</p>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--[if mso]></td><td width="50%" valign="top"><![endif]-->
+                      <div style="display:inline-block; width:100%; max-width:270px; vertical-align:top;">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="padding-bottom: 8px; font-size: 14px;">
+                              <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px;">Duration</p>
+                              <p style="color: #1A1613; font-weight: 600; margin: 0;">${startDate}<br/><span style="color:#8A7E74; font-size:11px; font-weight:normal;">to</span><br/>${endDate}</p>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--[if mso]></td></tr></table><![endif]-->
                     </td>
                   </tr>
                 </table>
               </div>
 
-              <!-- Sleek Horizontal Process Flow -->
-              <div style="background-color: #FFFDFB; border: 1px dashed #E46A09; border-radius: 12px; padding: 20px; margin-bottom: 35px; text-align: center;">
-                <p style="color: #1A1613; font-weight: 600; margin-top: 0; margin-bottom: 12px; font-size: 14px;">Next Steps Timeline</p>
-                <div style="color: #4A403A; font-size: 13px; line-height: 1.5;">
-                  <span style="color: #E46A09; font-weight: 600;">Offer Sent</span> &rarr; 
-                  <span style="color: #E46A09; font-weight: 600;">Review & Verify</span> &rarr; 
-                  <span style="color: #8A7E74;">CEMS Access</span> &rarr; 
-                  <span style="color: #8A7E74;">Onboarding</span>
+              <!-- Sleek Vertical Process Flow (Mobile First, Desktop Friendly) -->
+              <div style="background-color: #FFFDFB; border: 1px dashed #E46A09; border-radius: 12px; padding: 24px 20px; margin-bottom: 35px; text-align: center;">
+                <p style="color: #1A1613; font-weight: 600; margin-top: 0; margin-bottom: 16px; font-size: 14px;">Next Steps Timeline</p>
+                <div style="font-size: 13px; line-height: 1.5;">
+                  <p style="margin: 0; color: #E46A09; font-weight: 600;">&#10003; Offer Sent</p>
+                  <p style="margin: 6px 0; color: #8A7E74;">&darr;</p>
+                  <p style="margin: 0; color: #E46A09; font-weight: 600;">&#10003; Review & Verify</p>
+                  <p style="margin: 6px 0; color: #8A7E74;">&darr;</p>
+                  <p style="margin: 0; color: #8A7E74; font-weight: 600;">&#10003; CEMS Access</p>
+                  <p style="margin: 6px 0; color: #8A7E74;">&darr;</p>
+                  <p style="margin: 0; color: #8A7E74; font-weight: 600;">&#10003; Onboarding</p>
                 </div>
               </div>
 
               <!-- Premium Interactive Button -->
               <div style="text-align: center; margin-bottom: 40px;">
-                <a href="${verificationLink}" style="display: inline-block; background-color: #E46A09; color: #FFFFFF; text-decoration: none; padding: 15px 32px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(228,106,9,0.25);">VIEW & VERIFY OFFER</a>
+                <a href="${verificationLink}" style="display: inline-block; background-color: #E46A09; color: #FFFFFF; text-decoration: none; padding: 15px 0; width: 100%; max-width: 280px; box-sizing: border-box; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(228,106,9,0.25);">VIEW & VERIFY OFFER</a>
               </div>
 
               <hr style="border: none; border-top: 1px solid #EAE3D9; margin: 30px 0;" />
