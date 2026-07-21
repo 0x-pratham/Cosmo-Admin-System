@@ -17,43 +17,28 @@ export default function Dashboard() {
     studentEmail: "",
     prn: "2023000000",
     college: "Student College Name",
-    domainKey: "cybersecurity",
+    domainKey: "software_development",
     startDate: "22 May 2026",
     endDate: "22 August 2026",
     mode: "Hybrid",
   })
 
-  const [offerId, setOfferId] =
-  useState("")
-
+  const [offerId, setOfferId] = useState("")
   const [isExporting, setIsExporting] = useState(false)
   const [exportError, setExportError] = useState(null)
 
   useEffect(() => {
-
-  const generateInitialId = async () => {
-
-    try {
-
-      const newId =
-        await getNextOfferId(
-          formData.domainKey
-        )
-
-      setOfferId(newId)
-
-    } catch (error) {
-
-      console.error(
-        "INITIAL ID ERROR:",
-        error
-      )
+    const generateInitialId = async () => {
+      try {
+        const newId = await getNextOfferId(formData.domainKey)
+        setOfferId(newId)
+      } catch (error) {
+        console.error("INITIAL ID ERROR:", error)
+      }
     }
-  }
 
-  generateInitialId()
-
-}, [])
+    generateInitialId()
+  }, [])
 
   const handleChange = (field, value) => {
     const updatedData = {
@@ -64,88 +49,46 @@ export default function Dashboard() {
     setFormData(updatedData)
 
     if (field === "domainKey") {
-
-  const updateOfferId =
-    async () => {
-
-      try {
-
-        const newId =
-          await getNextOfferId(value)
-
-        setOfferId(newId)
-
-      } catch (error) {
-
-        console.error(
-          "DOMAIN ID ERROR:",
-          error
-        )
+      const updateOfferId = async () => {
+        try {
+          const newId = await getNextOfferId(value)
+          setOfferId(newId)
+        } catch (error) {
+          console.error("DOMAIN ID ERROR:", error)
+        }
       }
-    }
 
-  updateOfferId()
-}
+      updateOfferId()
+    }
   }
 
-  // Inside Dashboard.jsx
   const handleExportPdf = async () => {
     try {
-      setIsExporting(true);
-      setExportError(null);
+      setIsExporting(true)
+      setExportError(null)
 
-      const selectedDomain = domains[formData.domainKey];
+      const selectedDomain = domains[formData.domainKey]
 
-      // 1. Generate the PDF
-      const pdfUrl =
-  await exportOfferLetterPdf({
-    studentName:
-      formData.studentName,
+      const pdfUrl = await exportOfferLetterPdf({
+        studentName: formData.studentName,
+        offerId,
+      })
 
-    offerId,
-  })
+      await saveOfferToSupabase({
+        offerId,
+        studentName: formData.studentName,
+        studentEmail: formData.studentEmail,
+        prn: formData.prn,
+        college: formData.college,
+        domainKey: formData.domainKey,
+        domainName: selectedDomain?.domainName ?? "",
+        role: selectedDomain?.role ?? "",
+        startDate: formData.startDate,
+        endDate: formData.endDate,
+        mode: formData.mode,
+        pdfUrl,
+      })
 
-
-await saveOfferToSupabase({
-
-  offerId,
-
-  studentName:
-    formData.studentName,
-
-  studentEmail:
-    formData.studentEmail,
-
-  prn:
-    formData.prn,
-
-  college:
-    formData.college,
-
-  domainKey:
-    formData.domainKey,
-
-  domainName:
-    selectedDomain?.domainName ?? "",
-
-  role:
-    selectedDomain?.role ?? "",
-
-  startDate:
-    formData.startDate,
-
-  endDate:
-    formData.endDate,
-
-  mode:
-    formData.mode,
-
-  pdfUrl,
-})
-
-      
-
-      // 2. Send Email
       const response = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -156,53 +99,44 @@ await saveOfferToSupabase({
           offerId,
           verificationLink: pdfUrl,
         }),
-      });
+      })
 
-      // Check if the response is actually JSON before parsing
-      const contentType = response.headers.get("content-type");
+      const contentType = response.headers.get("content-type")
       if (contentType && contentType.indexOf("application/json") !== -1) {
-        const result = await response.json();
-        if (!result.success) throw new Error(result.message || "Server rejected request");
+        const result = await response.json()
+        if (!result.success) throw new Error(result.message || "Server rejected request")
       } else {
-        // If it's not JSON, check if the status was at least "OK"
-        if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+        if (!response.ok) throw new Error(`Server Error: ${response.status}`)
       }
 
-      alert("Offer Letter Exported & Email Sent Successfully");
-
-      window.location.reload();
-      
+      alert("Offer Letter Exported & Email Sent Successfully")
+      window.location.reload()
     } catch (error) {
-      console.error("PROCESS FAILED:", error);
-
-      setExportError(error.message || "Failed to export PDF or send email.");
+      console.error("PROCESS FAILED:", error)
+      setExportError(error.message || "Failed to export PDF or send email.")
     } finally {
-      setIsExporting(false);
+      setIsExporting(false)
     }
-  };
-
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200">
       <div className="backdrop-blur-xl bg-slate-950/90 text-white px-8 py-5 border-b border-slate-800 shadow-2xl sticky top-0 z-50">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-6">
           <div className="space-y-1">
-  <div className="flex items-center gap-2">
-    <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-
-    <p className="text-[11px] uppercase tracking-[0.3em] text-slate-400 font-semibold">
-      Cosmolix HR Workspace
-    </p>
-  </div>
-
-  <h1 className="text-3xl font-bold tracking-tight text-white">
-    Internship Offer Letter Generator
-  </h1>
-
-  <p className="text-sm text-slate-400">
-    Generate verified internship offer letters with secure QR validation.
-  </p>
-</div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-slate-400 font-semibold">
+                Cosmolix HR Workspace
+              </p>
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-white">
+              Internship Offer Letter Generator
+            </h1>
+            <p className="text-sm text-slate-400">
+              Generate verified internship offer letters with secure QR validation.
+            </p>
+          </div>
 
           <div className="flex items-center gap-3">
             {!authDisabled && (
@@ -220,22 +154,18 @@ await saveOfferToSupabase({
             <LoadingButton loading={isExporting} onClick={handleExportPdf} fullWidth={false}>
               Export PDF
             </LoadingButton>
-            
           </div>
         </div>
       </div>
 
       <div className="max-w-[1600px] mx-auto grid grid-cols-[420px_1fr] gap-8 p-8">
         <div className="bg-white/80 backdrop-blur-xl rounded-[28px] shadow-xl border border-slate-200/80 p-8 h-fit sticky top-28">
-        <div className="mb-8">
-  <h2 className="text-2xl font-bold text-slate-900">
-    Candidate Details
-  </h2>
-
-  <p className="text-sm text-slate-500 mt-1">
-    Fill in the intern information to generate a verified offer letter.
-  </p>
-</div>
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-slate-900">Candidate Details</h2>
+            <p className="text-sm text-slate-500 mt-1">
+              Fill in the intern information to generate a verified offer letter.
+            </p>
+          </div>
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Student Full Name</label>
@@ -284,6 +214,20 @@ await saveOfferToSupabase({
                 onChange={(e) => handleChange("domainKey", e.target.value)}
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black bg-white"
               >
+                {/* NEW DOMAINS */}
+                <option value="software_development">Software Engineering</option>
+                <option value="uiux_design">UI/UX Design</option>
+                <option value="quality_assurance">Quality Assurance & Testing</option>
+                <option value="digital_marketing">Digital Marketing & Growth</option>
+                <option value="content_marketing">Content Strategy & Social Media</option>
+                <option value="business_development">Business Development</option>
+                <option value="hr_operations">Human Resources & Operations</option>
+                <option value="client_relations">Client Success & Customer Relations</option>
+                <option value="finance_accounts">Finance & Accounts</option>
+                <option value="project_coordination">Project Management Office</option>
+                <option value="game_marketing">Game Marketing</option>
+
+                {/* LEGACY DOMAINS (RETAINED FOR BACKWARD COMPATIBILITY) */}
                 <option value="fullstack">Full Stack Web Development</option>
                 <option value="ai_ml">Machine Learning & AI</option>
                 <option value="cybersecurity">Cybersecurity & Ethical Hacking</option>

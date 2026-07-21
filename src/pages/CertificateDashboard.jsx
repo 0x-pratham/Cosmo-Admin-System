@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react"
 import Certificate from "@/components/letter/Certificate"
 import LoadingButton from "@/components/ui/LoadingButton"
@@ -11,7 +10,7 @@ export default function CertificateDashboard() {
   const [formData, setFormData] = useState({
     studentName: "Student Name",
     studentEmail: "",
-    domainKey: "cybersecurity",
+    domainKey: "software_development",
     startDate: "22 May 2026",
     endDate: "22 August 2026",
   })
@@ -21,9 +20,6 @@ export default function CertificateDashboard() {
   const [isExporting, setIsExporting] = useState(false)
   const [exportError, setExportError] = useState(null)
 
-  // The certificate is a fixed 1123x794px box (landscape A4). This scales
-  // it down to fit whatever width the preview column actually has, so it
-  // never gets clipped on narrower screens instead of showing a scrollbar.
   const CERT_WIDTH = 1123
   const CERT_HEIGHT = 794
   const previewRef = useRef(null)
@@ -60,8 +56,6 @@ export default function CertificateDashboard() {
     setFormData((prev) => ({ ...prev, [field]: value }))
 
     if (field === "domainKey" && !isIdEditable) {
-      // keep auto-numbering in sync with domain, unless the admin has
-      // taken manual control of the certificate number
       getNextCertificateId(value)
         .then(setCertificateId)
         .catch((error) => console.error("DOMAIN CERT ID ERROR:", error))
@@ -142,6 +136,20 @@ export default function CertificateDashboard() {
                 onChange={(e) => handleChange("domainKey", e.target.value)}
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black bg-white"
               >
+                {/* NEW DOMAINS */}
+                <option value="software_development">Software Engineering</option>
+                <option value="uiux_design">UI/UX Design</option>
+                <option value="quality_assurance">Quality Assurance & Testing</option>
+                <option value="digital_marketing">Digital Marketing & Growth</option>
+                <option value="content_marketing">Content Strategy & Social Media</option>
+                <option value="business_development">Business Development</option>
+                <option value="hr_operations">Human Resources & Operations</option>
+                <option value="client_relations">Client Success & Customer Relations</option>
+                <option value="finance_accounts">Finance & Accounts</option>
+                <option value="project_coordination">Project Management Office</option>
+                <option value="game_marketing">Game Marketing</option>
+
+                {/* LEGACY DOMAINS (RETAINED FOR BACKWARD COMPATIBILITY) */}
                 <option value="fullstack">Full Stack Web Development</option>
                 <option value="ai_ml">Machine Learning & AI</option>
                 <option value="cybersecurity">Cybersecurity & Ethical Hacking</option>
@@ -172,7 +180,6 @@ export default function CertificateDashboard() {
               </div>
             </div>
 
-            {/* Editable certificate ID */}
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 border border-slate-700 shadow-lg">
               <div className="flex items-center justify-between">
                 <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Certificate No.</p>
@@ -212,7 +219,6 @@ export default function CertificateDashboard() {
         </div>
 
         <div ref={previewRef} className="pb-20" style={{ width: "100%" }}>
-          {/* Visible preview — scaled down to fit the available width */}
           <div style={{ width: CERT_WIDTH * scale, height: CERT_HEIGHT * scale }}>
             <div
               style={{
@@ -233,8 +239,6 @@ export default function CertificateDashboard() {
             </div>
           </div>
 
-          {/* Hidden full-resolution copy, used only as the PDF export
-              source so exports are never rasterized at a shrunk size */}
           <div style={{ position: "absolute", left: "-9999px", top: 0 }}>
             <div id="certificate-render-target" style={{ width: CERT_WIDTH, height: CERT_HEIGHT }}>
               <Certificate
