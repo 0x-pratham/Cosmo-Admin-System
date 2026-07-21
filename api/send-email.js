@@ -1,37 +1,36 @@
 import { Resend } from "resend";
 import { render } from "@react-email/render";
-import OfferLetterEmail from "../src/emails/templates/OfferLetterEmail";
+// Fixed: Using explicit .jsx extension for ESM/Serverless compatibility
+import OfferLetterEmail from "../src/emails/templates/OfferLetterEmail.jsx";
 
 // Existing Resend initialization
-const resend = new Resend(process.env.RESEND_API_KEY); //[cite: 1]
+const resend = new Resend(process.env.RESEND_API_KEY);[cite: 2]
 
 export default async function handler(req, res) {
-  // Existing method check
-  if (req.method !== "POST") { //[cite: 1]
-    return res.status(405).json({ //[cite: 1]
-      success: false, //[cite: 1]
-      message: "Method not allowed", //[cite: 1]
+  if (req.method !== "POST") {[cite: 2]
+    return res.status(405).json({[cite: 2]
+      success: false,[cite: 2]
+      message: "Method not allowed",[cite: 2]
     });
   }
 
   try {
-    // Keeping every dynamic variable unchanged
     const {
-      studentName, //[cite: 1]
-      studentEmail, //[cite: 1]
-      prn, //[cite: 1]
-      college, //[cite: 1]
-      domainName, //[cite: 1]
-      role, //[cite: 1]
-      startDate, //[cite: 1]
-      endDate, //[cite: 1]
-      mode, //[cite: 1]
-      offerId, //[cite: 1]
-      verificationLink, //[cite: 1]
-    } = req.body; //[cite: 1]
+      studentName,[cite: 2]
+      studentEmail,[cite: 2]
+      prn,[cite: 2]
+      college,[cite: 2]
+      domainName,[cite: 2]
+      role,[cite: 2]
+      startDate,[cite: 2]
+      endDate,[cite: 2]
+      mode,[cite: 2]
+      offerId,[cite: 2]
+      verificationLink,[cite: 2]
+    } = req.body;[cite: 2]
 
-    // Render React component to HTML string
-    const emailHtml = render(
+    // Fixed: Added 'await' because render() is asynchronous
+    const emailHtml = await render(
       <OfferLetterEmail 
         studentName={studentName}
         studentEmail={studentEmail}
@@ -47,26 +46,28 @@ export default async function handler(req, res) {
       />
     );
 
-    // Existing send logic
-    const response = await resend.emails.send({ //[cite: 1]
-      from: "Cosmolix Pvt Ltd <info@cosmolix.co.in>", //[cite: 1]
-      to: studentEmail, //[cite: 1]
-      subject: `Internship Offer Letter - ${offerId}`, //[cite: 1]
-      html: emailHtml, // Replaced raw HTML with React Email generated HTML
+    // Debugging: Verify it's a string, not a Promise or object
+    console.log("Email HTML Type:", typeof emailHtml); 
+
+    const response = await resend.emails.send({[cite: 2]
+      from: "Cosmolix Pvt Ltd <info@cosmolix.co.in>",[cite: 2]
+      to: studentEmail,[cite: 2]
+      subject: `Internship Offer Letter - ${offerId}`,[cite: 2]
+      html: emailHtml,[cite: 2]
     });
 
-    return res.status(200).json({ //[cite: 1]
-      success: true, //[cite: 1]
-      message: "Email sent successfully", //[cite: 1]
-      response, //[cite: 1]
+    return res.status(200).json({[cite: 2]
+      success: true,[cite: 2]
+      message: "Email sent successfully",[cite: 2]
+      response,[cite: 2]
     });
 
-  } catch (error) { //[cite: 1]
-    console.error(error); //[cite: 1]
-    return res.status(500).json({ //[cite: 1]
-      success: false, //[cite: 1]
-      message: "Failed to send email", //[cite: 1]
-      error: error.message, //[cite: 1]
+  } catch (error) {[cite: 2]
+    console.error(error);[cite: 2]
+    return res.status(500).json({[cite: 2]
+      success: false,[cite: 2]
+      message: "Failed to send email",[cite: 2]
+      error: error.message,[cite: 2]
     });
   }
 }

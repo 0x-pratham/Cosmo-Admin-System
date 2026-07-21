@@ -1,3 +1,5 @@
+// Fixed: Explicit React import required for serverless JSX rendering
+import * as React from 'react';
 import { Html, Head, Preview, Body, Container, Section, Text } from '@react-email/components';
 import { theme } from '../theme';
 import { EmailHero } from '../components/EmailHero';
@@ -5,6 +7,7 @@ import { OfferSummary } from '../components/OfferSummary';
 import { CTAButtons } from '../components/CTAButtons';
 import { EmailFooter } from '../components/EmailFooter';
 
+// Fixed: Using default export function syntax explicitly
 export default function OfferLetterEmail({
   studentName,
   studentEmail,
@@ -18,6 +21,9 @@ export default function OfferLetterEmail({
   offerId,
   verificationLink
 }) {
+  // NOTE: No window, document, navigator, or localStorage APIs are used here.
+  // This is strictly pure UI logic to ensure safe server-side rendering.
+  
   return (
     <Html>
       <Head />
