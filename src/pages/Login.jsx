@@ -1,12 +1,16 @@
 import { useState } from "react"
-
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
 import { useAuth } from "@/context/AuthContext"
 
+import LoginCard from "@/components/auth/LoginCard"
+
+import loginBg from "@/assets/images/login-bg.png"
+
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
+
   const {
     authenticated,
     authDisabled,
@@ -31,18 +35,20 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
     setError(null)
 
     if (!credentialsConfigured) {
       setError(
-        "Admin sign-in is not configured. Set VITE_ADMIN_USERNAME and VITE_ADMIN_PASSWORD in the deployment environment."
+        "Admin sign-in is not configured. Configure administrator credentials before continuing."
       )
       return
     }
 
     const ok = login(username, password)
+
     if (!ok) {
-      setError("Invalid username or password.")
+      setError("Invalid administrator credentials.")
       return
     }
 
@@ -54,97 +60,87 @@ export default function Login() {
     location.state?.reason === "not_configured"
 
   return (
-    <div className="min-h-screen bg-[#e8ecf2] flex flex-col">
-      <div className="bg-[#0f172a] text-white px-8 py-5 shadow-lg border-b border-slate-800/80">
-        <div className="max-w-md mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400 font-semibold">
-            Internal tooling
-          </p>
+    <div
+      className="relative min-h-screen overflow-hidden"
+      style={{
+        backgroundImage: `url(${loginBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Dark Overlay */}
 
-          <h1 className="text-2xl font-bold tracking-tight mt-1">
-            Admin sign in
-          </h1>
+      <div className="absolute inset-0 bg-black/45" />
 
-          <p className="text-slate-400 text-sm mt-1">
-            Offer letter generation is restricted to administrators.
-          </p>
-        </div>
-      </div>
+      {/* Orange Gradient */}
 
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-[0_20px_50px_rgba(15,23,42,0.08)] border border-slate-200/90 p-8">
-          {notConfigured ? (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-              <p className="font-semibold">
-                Credentials not configured
-              </p>
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-900/40 via-transparent to-black/50" />
 
-              <p className="mt-2 text-amber-900/90 leading-relaxed">
-                Add{" "}
-                <span className="font-mono text-xs">
-                  VITE_ADMIN_USERNAME
-                </span>{" "}
-                and{" "}
-                <span className="font-mono text-xs">
-                  VITE_ADMIN_PASSWORD
-                </span>{" "}
-                to your environment before deploying. For local development
-                only, you may set{" "}
-                <span className="font-mono text-xs">
-                  VITE_AUTH_DISABLED=true
-                </span>{" "}
-                to skip login.
-              </p>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6 mt-4"
-            >
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Username
-                </label>
+      {/* Main Layout */}
 
-                <input
-                  type="text"
-                  autoComplete="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
-                  required
-                />
-              </div>
+      <div className="relative z-10 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Password
-                </label>
+            {/* LEFT CONTENT */}
 
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
-                  required
-                />
-              </div>
+            <div className="hidden lg:block">
 
-              {error ? (
-                <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
-                  {error}
-                </p>
-              ) : null}
-
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-[#0f172a] text-white font-semibold py-3 hover:bg-slate-900 transition-colors"
+              <span
+                className="uppercase tracking-[0.35em] text-orange-300 text-sm"
+                style={{
+                  fontFamily: "Google Sans Flex",
+                }}
               >
-                Sign in
-              </button>
-            </form>
-          )}
+                Enterprise Platform
+              </span>
+
+              <h1
+                className="mt-6 text-6xl text-white font-bold leading-tight"
+                style={{
+                  fontFamily: "Times New Roman",
+                }}
+              >
+                Intelligent
+                <br />
+                Administration
+                <br />
+                System
+              </h1>
+
+              <p
+                className="mt-8 max-w-xl text-lg leading-8 text-white/75"
+                style={{
+                  fontFamily: "Google Sans Flex",
+                }}
+              >
+                Securely manage administrative operations,
+                employee resources, offer letter generation,
+                workflow automation and organizational
+                activities through a unified enterprise
+                platform.
+              </p>
+
+            </div>
+
+            {/* RIGHT SIDE */}
+
+            <div className="flex justify-center lg:justify-end">
+
+              <LoginCard
+                username={username}
+                password={password}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                handleSubmit={handleSubmit}
+                error={error}
+                notConfigured={notConfigured}
+              />
+
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
