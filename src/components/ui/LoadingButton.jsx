@@ -6,38 +6,71 @@ export default function LoadingButton({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={loading}
       className={`
-        ${fullWidth ? "w-full" : "w-auto px-6"}
-        py-4
-        rounded-3xl
-        font-semibold
-        transition-all
-        duration-300
+        ${fullWidth ? "w-full" : "w-auto px-8"}
+
+        h-14
+        rounded-2xl
         flex
         items-center
         justify-center
-
-        ${
-          loading
-            ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-gradient-to-r from-slate-950 to-slate-800 text-white hover:scale-[1.01] hover:shadow-2xl active:scale-[0.99]"
-        }
+        font-semibold
+        text-[15px]
+        transition-all
+        duration-300
+        active:scale-[0.98]
+        disabled:cursor-not-allowed
       `}
+      style={
+        loading
+          ? {
+              background: "#CFC7C2",
+              color: "#FFFFFF",
+            }
+          : {
+              background: "linear-gradient(135deg,#D3600B 0%,#E9813B 100%)",
+              color: "#FFFFFF",
+              fontFamily: '"Google Sans Flex", sans-serif',
+              boxShadow: "0 10px 24px rgba(211,96,11,.20)",
+            }
+      }
+      onMouseEnter={(e) => {
+        if (!loading) {
+          e.currentTarget.style.background =
+            "linear-gradient(135deg,#8C3B08 0%,#D3600B 100%)";
+
+          e.currentTarget.style.boxShadow =
+            "0 14px 28px rgba(211,96,11,.28)";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!loading) {
+          e.currentTarget.style.background =
+            "linear-gradient(135deg,#D3600B 0%,#E9813B 100%)";
+
+          e.currentTarget.style.boxShadow =
+            "0 10px 24px rgba(211,96,11,.20)";
+        }
+      }}
     >
       {loading ? (
-        <div className="flex items-center justify-center gap-3">
-          {/* SPINNER */}
-          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        <div className="flex items-center gap-3">
+          <div
+            className="w-5 h-5 rounded-full animate-spin"
+            style={{
+              border: "2px solid rgba(255,255,255,.45)",
+              borderTopColor: "#FFFFFF",
+            }}
+          />
 
-          <span>
-            Generating PDF...
-          </span>
+          <span>Generating Offer Letter...</span>
         </div>
       ) : (
         children
       )}
     </button>
-  )
+  );
 }

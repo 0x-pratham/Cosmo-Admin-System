@@ -8,7 +8,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        default:
+          "text-white border border-transparent shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-300",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
@@ -55,7 +56,31 @@ function Button({
       data-variant={variant}
       data-size={size}
       className={cn(buttonVariants({ variant, size, className }))}
-      {...props} />
+      style={
+        variant === "default"
+          ? {
+              background: "linear-gradient(135deg, #D3600B 0%, #E9813B 100%)",
+              color: "#FFFFFF",
+              fontFamily: '"Google Sans Flex", sans-serif',
+              borderRadius: "16px",
+              border: "1px solid #D3600B",
+            }
+          : undefined
+      }
+      onMouseEnter={(e) => {
+        if (variant === "default") {
+          e.currentTarget.style.background =
+            "linear-gradient(135deg, #8C3B08 0%, #D3600B 100%)";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (variant === "default") {
+          e.currentTarget.style.background =
+            "linear-gradient(135deg, #D3600B 0%, #E9813B 100%)";
+        }
+      }}
+      {...props}
+    />
   );
 }
 

@@ -56,3 +56,22 @@
     min-height: 100vh;
   }
 }
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-track{
+background:#F8F7F1;
+}
+
+::-webkit-scrollbar-thumb{
+background:#D3600B;
+border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background:#8C3B08;
+}
