@@ -30,7 +30,7 @@ export default function LoginHeader() {
             fontFamily: "Times New Roman, serif",
           }}
         >
-          Admin Portal
+          Admin System
         </h1>
 
         <h2

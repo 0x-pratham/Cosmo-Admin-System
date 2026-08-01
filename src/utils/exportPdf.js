@@ -14,21 +14,12 @@ export const exportOfferLetterPdf = async ({
     return Promise.reject(new Error("Offer letter element not found"))
   }
 
-  // Ensure the element is scrolled into view so all assets are active
   container.scrollIntoView({ block: "nearest", inline: "nearest" })
 
   const safeName = String(studentName || "Student").replace(/[/\\?%*:|"<>]/g, "_")
   const safeId = String(offerId || "offer").replace(/[/\\?%*:|"<>]/g, "_")
   const fileName = `${safeName}_${safeId}.pdf`
 
-  // Select all individual pages dynamically (Page 1 and Page 2)
-  const pages = Array.from(container.querySelectorAll(".offer-page"))
-  
-  if (pages.length === 0) {
-    return Promise.reject(new Error("No pages found to export"))
-  }
-
-  // Initialize PDF exactly at A4 size
   const pdf = new jsPDF({
     orientation: "portrait",
     unit: "px",
@@ -37,42 +28,39 @@ export const exportOfferLetterPdf = async ({
   })
 
   try {
-    // Loop through each page, capture it, and add to PDF
-    for (let i = 0; i < pages.length; i++) {
-      const pageElement = pages[i]
+    // FIX 2, 3, & 4: devicePixelRatio scale, removed letterRendering, fixed canvas width/height
+    const canvas = await html2canvas(container, {
+      scale: window.devicePixelRatio || 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      width: 794,
+      height: 1123,
+      scrollX: 0,
+      scrollY: 0,
+      removeContainer: true,
 
-      const canvas = await html2canvas(pageElement, {
-        scale: 3, // High scale for professional print quality
-        useCORS: true,
-        logging: false,
-        letterRendering: true,
-        windowWidth: 800,
-        onclone: (clonedDoc) => {
-          prepareCloneForHtml2Canvas(clonedDoc, pageElement, elementId)
-        },
-      })
+      onclone: (clonedDoc) => {
+        prepareCloneForHtml2Canvas(clonedDoc, container, elementId)
+      },
+    })
 
-      const imgData = canvas.toDataURL("image/jpeg", 1.0)
+    // FIX 7: Highest quality PNG data URL
+    const imgData = canvas.toDataURL("image/png", 1.0)
 
-      // Add a new PDF page for every page after the first one
-      if (i > 0) {
-        pdf.addPage([794, 1123], "portrait")
-      }
+    // FIX 1: Natural aspect ratio calculation to prevent force-stretching
+    const pdfWidth = pdf.internal.pageSize.getWidth()
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width
 
-      // Paint the canvas exact to the edges (0, 0, width, height)
-      pdf.addImage(imgData, "JPEG", 0, 0, 794, 1123)
-    }
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight, undefined, "FAST")
 
-    // Generate Blob for Supabase
     const pdfBlob = pdf.output("blob")
 
-    // UPLOAD TO SUPABASE
     const publicUrl = await uploadPdf({
       blob: pdfBlob,
       fileName,
     })
 
-    // STILL DOWNLOAD LOCALLY
     pdf.save(fileName)
 
     return publicUrl
