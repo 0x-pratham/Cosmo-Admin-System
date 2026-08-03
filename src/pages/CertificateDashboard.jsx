@@ -28,13 +28,11 @@ export default function CertificateDashboard() {
   const previewRef = useRef(null)
   const [scale, setScale] = useState(1)
 
-  // Recalculate scale for the 2-column layout
   useEffect(() => {
     const el = previewRef.current
     if (!el) return
     const updateScale = () => {
       const availableWidth = el.clientWidth
-      // We scale it down so it fits perfectly in the right pane without overflow
       setScale(Math.min(availableWidth / CERT_WIDTH, 1))
     }
     updateScale()
@@ -54,7 +52,6 @@ export default function CertificateDashboard() {
     }
   }
 
-  // Format date helper for the certificate preview (turns "YYYY-MM-DD" into "DD Month YYYY")
   const formatDateForPreview = (dateString) => {
     if (!dateString) return "";
     const dateObj = new Date(dateString);
@@ -72,7 +69,6 @@ export default function CertificateDashboard() {
 
       const selectedDomain = domains[formData.domainKey]
       
-      // Use formatted dates for the actual PDF generation
       const formattedStartDate = formatDateForPreview(formData.startDate) || formData.startDate;
       const formattedEndDate = formatDateForPreview(formData.endDate) || formData.endDate;
 
@@ -124,7 +120,7 @@ export default function CertificateDashboard() {
   const selectedDomain = domains[formData.domainKey]
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] font-sans text-slate-900 pb-20">
+    <div className="min-h-screen font-sans text-slate-900 pb-20" style={{ backgroundColor: '#F8FAFC' }}>
       
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
@@ -132,7 +128,7 @@ export default function CertificateDashboard() {
           <div className="flex items-center gap-4">
             <img src={cosmolixLogo} alt="Cosmolix" className="w-12 h-12 object-contain" />
             <div>
-              <p className="text-[11px] font-bold text-[#D35C18] tracking-widest uppercase mb-1">Cosmolix HRMS</p>
+              <p className="text-[11px] font-bold tracking-widest uppercase mb-1" style={{ color: '#D35C18' }}>Cosmolix HRMS</p>
               <h1 className="text-2xl font-bold" style={{ fontFamily: 'Times New Roman, serif' }}>Certificate Generator</h1>
             </div>
           </div>
@@ -152,9 +148,9 @@ export default function CertificateDashboard() {
           <div className="bg-white p-6 rounded-[24px] border border-slate-200 shadow-sm flex items-center justify-between">
              <div>
                 <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Credential No.</p>
-                <p className="text-xl font-mono font-bold text-[#D35C18]">{certificateId || "..."}</p>
+                <p className="text-xl font-mono font-bold" style={{ color: '#D35C18' }}>{certificateId || "..."}</p>
              </div>
-             <div className="h-12 w-12 rounded-full bg-[#FFF2EB] flex items-center justify-center text-[#D35C18]">
+             <div className="h-12 w-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#FFF2EB', color: '#D35C18' }}>
                 <FiAward size={24} />
              </div>
           </div>
@@ -166,17 +162,17 @@ export default function CertificateDashboard() {
             <div className="space-y-5">
               <div>
                  <label className="block text-[13px] font-bold text-slate-700 uppercase tracking-wide mb-2">Student Full Name <span className="text-red-500">*</span></label>
-                 <input type="text" value={formData.studentName} onChange={(e) => handleChange("studentName", e.target.value)} className="w-full bg-[#FAFAFA] border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:border-[#D35C18] outline-none transition-all" placeholder="e.g. Prathamesh Bhil" />
+                 <input type="text" value={formData.studentName} onChange={(e) => handleChange("studentName", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none transition-all" style={{ backgroundColor: '#FAFAFA' }} placeholder="e.g. Prathamesh Bhil" />
               </div>
 
               <div>
                  <label className="block text-[13px] font-bold text-slate-700 uppercase tracking-wide mb-2">Student Email <span className="text-red-500">*</span></label>
-                 <input type="email" value={formData.studentEmail} onChange={(e) => handleChange("studentEmail", e.target.value)} className="w-full bg-[#FAFAFA] border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:border-[#D35C18] outline-none transition-all" placeholder="e.g. prathamesh@example.com" />
+                 <input type="email" value={formData.studentEmail} onChange={(e) => handleChange("studentEmail", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none transition-all" style={{ backgroundColor: '#FAFAFA' }} placeholder="e.g. prathamesh@example.com" />
               </div>
 
               <div>
                  <label className="block text-[13px] font-bold text-slate-700 uppercase tracking-wide mb-2">Domain <span className="text-red-500">*</span></label>
-                 <select value={formData.domainKey} onChange={(e) => handleChange("domainKey", e.target.value)} className="w-full bg-[#FAFAFA] border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:border-[#D35C18] outline-none transition-all">
+                 <select value={formData.domainKey} onChange={(e) => handleChange("domainKey", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none transition-all" style={{ backgroundColor: '#FAFAFA' }}>
                     <option value="software_development">Software Engineering</option>
                     <option value="uiux_design">UI/UX Design</option>
                     <option value="quality_assurance">Quality Assurance & Testing</option>
@@ -200,18 +196,15 @@ export default function CertificateDashboard() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                    <label className="block text-[13px] font-bold text-slate-700 uppercase tracking-wide mb-2">Start Date <span className="text-red-500">*</span></label>
-                   {/* Changed to type="date" for calendar picker */}
-                   <input type="date" value={formData.startDate} onChange={(e) => handleChange("startDate", e.target.value)} className="w-full bg-[#FAFAFA] border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:border-[#D35C18] outline-none transition-all cursor-pointer" />
+                   <input type="date" value={formData.startDate} onChange={(e) => handleChange("startDate", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none transition-all cursor-pointer" style={{ backgroundColor: '#FAFAFA' }} />
                 </div>
                 <div>
                    <label className="block text-[13px] font-bold text-slate-700 uppercase tracking-wide mb-2">End Date <span className="text-red-500">*</span></label>
-                   {/* Changed to type="date" for calendar picker */}
-                   <input type="date" value={formData.endDate} onChange={(e) => handleChange("endDate", e.target.value)} className="w-full bg-[#FAFAFA] border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:border-[#D35C18] outline-none transition-all cursor-pointer" />
+                   <input type="date" value={formData.endDate} onChange={(e) => handleChange("endDate", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none transition-all cursor-pointer" style={{ backgroundColor: '#FAFAFA' }} />
                 </div>
               </div>
             </div>
             
-            {/* Generate Button inside the form panel */}
             <div className="mt-8 pt-6 border-t border-slate-100">
                {exportError && <p className="text-xs text-red-500 font-bold mb-3 bg-red-50 px-3 py-2 rounded-lg border border-red-200">{exportError}</p>}
                <LoadingButton loading={isExporting} onClick={handleExportPdf}>
@@ -226,10 +219,10 @@ export default function CertificateDashboard() {
         <div className="flex flex-col h-full">
           <div className="mb-4 flex items-center justify-between px-2">
              <h2 className="text-lg font-bold text-slate-800">Live Preview</h2>
-             <span className="text-xs font-bold text-[#15803D] bg-[#F0FDF4] px-3 py-1 rounded-full border border-[#DCFCE7]">Auto-Updating</span>
+             <span className="text-xs font-bold px-3 py-1 rounded-full border" style={{ color: '#15803D', backgroundColor: '#F0FDF4', borderColor: '#DCFCE7' }}>Auto-Updating</span>
           </div>
           
-          <div ref={previewRef} className="w-full bg-[#ECE8E3] rounded-[28px] border border-slate-200 shadow-inner flex items-center justify-center p-10 bg-[radial-gradient(#D6D0C4_1px,transparent_1px)]" style={{ backgroundSize: '20px 20px', minHeight: '700px' }}>
+          <div ref={previewRef} className="w-full rounded-[28px] border border-slate-200 shadow-inner flex items-center justify-center p-10" style={{ backgroundColor: '#ECE8E3', backgroundImage: 'radial-gradient(#D6D0C4 1px, transparent 1px)', backgroundSize: '20px 20px', minHeight: '700px' }}>
             
             <div style={{ width: CERT_WIDTH * scale, height: CERT_HEIGHT * scale }} className="shadow-2xl transition-transform duration-300">
               <div style={{ width: CERT_WIDTH, height: CERT_HEIGHT, transform: `scale(${scale})`, transformOrigin: "top left" }}>
