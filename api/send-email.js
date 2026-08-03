@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     const {
       type = "offer",
 
-      // Offer Letter & Certificate Shared Fields
+      // Shared Fields
       studentName,
       studentEmail,
       domainName,
@@ -37,133 +37,269 @@ export default async function handler(req, res) {
     } = req.body;
 
     // ==========================================
-    // 1. OFFER LETTER EMAIL BLOCK
+    // 1. PREMIUM OFFER LETTER EMAIL
     // ==========================================
     if (type === "offer") {
       const response = await resend.emails.send({
-        from: "Cosmolix Pvt Ltd <info@cosmolix.co.in>",
+        from: "Cosmolix HR <info@cosmolix.co.in>",
         to: studentEmail,
-        subject: `Internship Offer Letter - ${offerId}`,
+        subject: `Congratulations! Your Offer Letter from Cosmolix - ${offerId}`,
         html: `
-          <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #FAF8F5; padding: 40px 20px;">
-            <div style="max-width: 650px; margin: auto; background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #EAE3D9;">
-              <div style="background: linear-gradient(135deg, #1A1613 0%, #2D2520 100%); padding: 45px 20px; text-align: center;">
-                <img src="https://cosmolix.co.in/logo/cosmolix-logo.png" alt="Cosmolix Logo" style="max-width: 130px; height: auto; margin-bottom: 20px;" />
-                <p style="color: #F1872D; font-size: 14px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px;">Congratulations</p>
-                <h1 style="color: #FFFFFF; font-size: 26px; font-weight: 600; margin: 0; line-height: 1.4; letter-spacing: -0.5px;">
-                  Your Internship Offer<br/><span style="font-weight: 300; opacity: 0.9; font-size: 22px;">is officially issued</span>
-                </h1>
-              </div>
-              <div style="padding: 40px 35px;">
-                <p style="color: #2D2520; font-size: 16px; margin-top: 0; margin-bottom: 16px;">Dear <strong>${studentName}</strong>,</p>
-                <p style="color: #4A403A; font-size: 15px; line-height: 1.6; margin-bottom: 30px;">
-                  Your application has been successfully approved by Cosmolix Private Limited. We are delighted to welcome you to our Internship Program.
-                </p>
-                <div style="text-align: center; margin-bottom: 40px;">
-                  <a href="${verificationLink}" style="display: inline-block; background-color: #E46A09; color: #FFFFFF; text-decoration: none; padding: 15px 0; width: 100%; max-width: 280px; box-sizing: border-box; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;">VIEW & VERIFY OFFER</a>
-                </div>
-                <p style="color: #8A7E74; font-size: 12px; text-align: center; margin: 0;">
-                  <a href="https://www.cosmolix.co.in" style="color: #E46A09; text-decoration: none; font-weight: 500;">www.cosmolix.co.in</a> &nbsp;|&nbsp; 
-                  <a href="mailto:info@cosmolix.co.in" style="color: #E46A09; text-decoration: none; font-weight: 500;">info@cosmolix.co.in</a>
-                </p>
-              </div>
-            </div>
-          </div>
+          <!DOCTYPE html>
+          <html>
+          <body style="margin: 0; padding: 0; background-color: #F3F4F6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F3F4F6; padding: 40px 20px;">
+              <tr>
+                <td align="center">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
+                    
+                    <!-- Header -->
+                    <tr>
+                      <td style="background-color: #1A1613; padding: 40px 30px; text-align: center;">
+                        <img src="https://cosmolix.co.in/logo/cosmolix-logo.png" alt="Cosmolix" width="120" style="display: block; margin: 0 auto 20px auto; border: 0;" />
+                        <h1 style="color: #FFFFFF; font-size: 28px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: -0.5px;">Offer of Internship</h1>
+                        <p style="color: #D35C18; font-size: 14px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 1.5px;">Cosmolix Private Limited</p>
+                      </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                      <td style="padding: 40px 30px;">
+                        <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0;">Dear <strong>${studentName}</strong>,</p>
+                        <p style="font-size: 15px; color: #4B5563; line-height: 1.6; margin: 0 0 25px 0;">
+                          We are thrilled to extend this offer to join the Cosmolix team. Your skills and passion stood out to us, and we are confident that you will make a significant impact during your time with us.
+                        </p>
+
+                        <!-- Details Box -->
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F9FAFB; border-radius: 12px; padding: 20px; margin-bottom: 30px; border: 1px solid #E5E7EB;">
+                          <tr>
+                            <td style="padding-bottom: 15px;">
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Role</p>
+                              <p style="font-size: 16px; color: #111827; margin: 0; font-weight: 600;">${role}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding-bottom: 15px;">
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Department</p>
+                              <p style="font-size: 16px; color: #111827; margin: 0; font-weight: 600;">${domainName}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Reference ID</p>
+                              <p style="font-size: 14px; color: #111827; margin: 0; font-family: monospace; font-weight: 600;">${offerId}</p>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="font-size: 15px; color: #4B5563; line-height: 1.6; margin: 0 0 30px 0; text-align: center;">
+                          Please review your official offer letter by clicking the button below.
+                        </p>
+
+                        <!-- CTA -->
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td align="center">
+                              <a href="${verificationLink}" style="background-color: #D35C18; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px; display: inline-block;">View Official Offer Letter</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                      <td style="padding: 30px; border-top: 1px solid #E5E7EB; background-color: #FAFAFA;">
+                        <p style="font-size: 14px; color: #111827; font-weight: 600; margin: 0 0 4px 0;">Prathamesh Bhil</p>
+                        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px 0;">Founder & Chief Executive Officer</p>
+                        <p style="font-size: 12px; color: #9CA3AF; margin: 0; text-align: center;">
+                          &copy; ${new Date().getFullYear()} Cosmolix Private Limited. All rights reserved.<br/>
+                          Pune, Maharashtra, India
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+          </html>
         `,
       });
       return res.status(200).json({ success: true, message: "Email sent successfully", response });
     }
 
     // ==========================================
-    // 2. ONBOARDING EMAIL BLOCK
+    // 2. PREMIUM ONBOARDING EMAIL
     // ==========================================
     if (type === "onboarding") {
-      const welcomeLink = verificationLink; 
       const response = await resend.emails.send({
-        from: "Cosmolix Pvt Ltd <info@cosmolix.co.in>",
+        from: "Cosmolix HR <info@cosmolix.co.in>",
         to: candidateEmail,
-        subject: "Welcome to Cosmolix Private Limited!",
+        subject: `Welcome Aboard! Next Steps at Cosmolix`,
         html: `
-          <div style="font-family:Segoe UI,Arial,sans-serif;background:#F8F7F1;padding:40px 20px;">
-            <div style="max-width:680px;margin:auto;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08);">
-              <div style="background:#1A1613;padding:55px;text-align:center;">
-                <img src="https://cosmolix.co.in/logo/cosmolix-logo.png" width="130" style="margin-bottom:20px;" />
-                <p style="color:#E9813B;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin:0;">Welcome Aboard</p>
-                <h1 style="color:#ffffff;font-size:30px;margin:18px 0 10px;">Welcome to Cosmolix</h1>
-              </div>
-              <div style="padding:40px;">
-                <p style="font-size:16px;color:#222;">Dear <strong>${candidateName}</strong>,</p>
-                <p style="font-size:15px;line-height:1.8;color:#555;">Congratulations and welcome to <strong>Cosmolix Private Limited.</strong> We are delighted to have you as a part of our growing team.</p>
-                <div style="text-align:center;margin:40px 0;">
-                  <a href="${welcomeLink}" style="background:#E46A09;color:#fff;text-decoration:none;padding:16px 42px;border-radius:10px;display:inline-block;font-weight:600;font-size:15px;">Access Welcome Portal</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!DOCTYPE html>
+          <html>
+          <body style="margin: 0; padding: 0; background-color: #F3F4F6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F3F4F6; padding: 40px 20px;">
+              <tr>
+                <td align="center">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
+                    
+                    <!-- Header -->
+                    <tr>
+                      <td style="background-color: #1A1613; padding: 40px 30px; text-align: center;">
+                        <img src="https://cosmolix.co.in/logo/cosmolix-logo.png" alt="Cosmolix" width="120" style="display: block; margin: 0 auto 20px auto; border: 0;" />
+                        <h1 style="color: #FFFFFF; font-size: 28px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: -0.5px;">Welcome Aboard!</h1>
+                        <p style="color: #D35C18; font-size: 14px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 1.5px;">Your Journey Begins</p>
+                      </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                      <td style="padding: 40px 30px;">
+                        <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0;">Hi <strong>${candidateName}</strong>,</p>
+                        <p style="font-size: 15px; color: #4B5563; line-height: 1.6; margin: 0 0 25px 0;">
+                          We are absolutely delighted to welcome you to <strong>Cosmolix Private Limited</strong>. Your official onboarding process has begun, and we've prepared a personalized portal to get you started.
+                        </p>
+
+                        <!-- Details Box -->
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F9FAFB; border-radius: 12px; padding: 20px; margin-bottom: 30px; border: 1px solid #E5E7EB;">
+                          <tr>
+                            <td width="50%" style="padding-bottom: 15px;">
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Joining Date</p>
+                              <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">${joiningDate}</p>
+                            </td>
+                            <td width="50%" style="padding-bottom: 15px;">
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Role</p>
+                              <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">${role}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Department</p>
+                              <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">${department}</p>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="font-size: 15px; color: #4B5563; line-height: 1.6; margin: 0 0 30px 0; text-align: center;">
+                          Access your Welcome Portal to view your digital pass, read guidelines, and connect with your team.
+                        </p>
+
+                        <!-- CTA -->
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td align="center">
+                              <a href="${verificationLink}" style="background-color: #D35C18; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px; display: inline-block;">Access Welcome Portal</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                      <td style="padding: 30px; border-top: 1px solid #E5E7EB; background-color: #FAFAFA;">
+                        <p style="font-size: 12px; color: #9CA3AF; margin: 0; text-align: center;">
+                          &copy; ${new Date().getFullYear()} Cosmolix Private Limited. All rights reserved.<br/>
+                          Pune, Maharashtra, India
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+          </html>
         `,
       });
       return res.status(200).json({ success: true, message: "Onboarding email sent successfully", response });
     }
 
     // ==========================================
-    // 3. CERTIFICATE EMAIL BLOCK
+    // 3. PREMIUM CERTIFICATE EMAIL
     // ==========================================
     if (type === "certificate") {
       const response = await resend.emails.send({
-        from: "Cosmolix Pvt Ltd <info@cosmolix.co.in>",
+        from: "Cosmolix HR <info@cosmolix.co.in>",
         to: studentEmail,
-        subject: `Internship Completion Certificate - ${certificateId}`,
+        subject: `Your Internship Certificate - ${certificateId}`,
         html: `
-          <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #FAF8F5; padding: 40px 20px;">
-            <div style="max-width: 650px; margin: auto; background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #EAE3D9;">
-              <!-- Premium Hero Section -->
-              <div style="background: linear-gradient(135deg, #1A1613 0%, #2D2520 100%); padding: 45px 20px; text-align: center;">
-                <img src="https://cosmolix.co.in/logo/cosmolix-logo.png" alt="Cosmolix Logo" style="max-width: 130px; height: auto; margin-bottom: 20px;" />
-                <p style="color: #F1872D; font-size: 14px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px;">Program Completed</p>
-                <h1 style="color: #FFFFFF; font-size: 26px; font-weight: 600; margin: 0; line-height: 1.4; letter-spacing: -0.5px;">
-                  Your Completion Certificate<br/><span style="font-weight: 300; opacity: 0.9; font-size: 22px;">is now officially issued</span>
-                </h1>
-              </div>
-
-              <!-- Content Area -->
-              <div style="padding: 40px 35px;">
-                <p style="color: #2D2520; font-size: 16px; margin-top: 0; margin-bottom: 16px;">Dear <strong>${studentName}</strong>,</p>
-                <p style="color: #4A403A; font-size: 15px; line-height: 1.6; margin-bottom: 30px;">
-                  Congratulations! We are thrilled to issue your official Internship Completion Certificate. Your dedication and hard work as a <strong>${role}</strong> in the <strong>${domainName}</strong> domain have been truly appreciated by the team at Cosmolix Private Limited.
-                </p>
-
-                <!-- Elegant Details Card -->
-                <div style="background-color: #FCFBFA; border: 1px solid #EAE3D9; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
-                  <h3 style="color: #1A1613; margin-top: 0; margin-bottom: 20px; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #EAE3D9; padding-bottom: 8px;">Certificate Details</h3>
-                  
-                  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+          <!DOCTYPE html>
+          <html>
+          <body style="margin: 0; padding: 0; background-color: #F3F4F6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F3F4F6; padding: 40px 20px;">
+              <tr>
+                <td align="center">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
+                    
+                    <!-- Header -->
                     <tr>
-                      <td style="padding-bottom: 16px; font-size: 14px;">
-                        <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase;">Credential ID</p>
-                        <p style="color: #1A1613; font-weight: 600; margin: 0; font-family: monospace;">${certificateId}</p>
+                      <td style="background-color: #1A1613; padding: 40px 30px; text-align: center;">
+                        <img src="https://cosmolix.co.in/logo/cosmolix-logo.png" alt="Cosmolix" width="120" style="display: block; margin: 0 auto 20px auto; border: 0;" />
+                        <h1 style="color: #FFFFFF; font-size: 28px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: -0.5px;">Program Completed</h1>
+                        <p style="color: #D35C18; font-size: 14px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 1.5px;">Congratulations</p>
                       </td>
-                      <td style="padding-bottom: 16px; font-size: 14px;">
-                        <p style="color: #8A7E74; font-size: 11px; margin: 0 0 4px; text-transform: uppercase;">Duration</p>
-                        <p style="color: #1A1613; font-weight: 600; margin: 0;">${startDate} to ${endDate}</p>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                      <td style="padding: 40px 30px;">
+                        <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0;">Dear <strong>${studentName}</strong>,</p>
+                        <p style="font-size: 15px; color: #4B5563; line-height: 1.6; margin: 0 0 25px 0;">
+                          We are incredibly proud to present your official Internship Completion Certificate. Thank you for your dedication and the impactful work you contributed to the <strong>${domainName}</strong> team.
+                        </p>
+
+                        <!-- Details Box -->
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F9FAFB; border-radius: 12px; padding: 20px; margin-bottom: 30px; border: 1px solid #E5E7EB;">
+                          <tr>
+                            <td style="padding-bottom: 15px;">
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Credential ID</p>
+                              <p style="font-size: 14px; color: #111827; margin: 0; font-family: monospace; font-weight: 600;">${certificateId}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p style="font-size: 12px; color: #6B7280; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Duration</p>
+                              <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">${startDate} to ${endDate}</p>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="font-size: 15px; color: #4B5563; line-height: 1.6; margin: 0 0 30px 0; text-align: center;">
+                          You can download and verify your digital certificate below. We wish you the absolute best in your future endeavors!
+                        </p>
+
+                        <!-- CTA -->
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td align="center">
+                              <a href="${verificationLink}" style="background-color: #111827; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px; display: inline-block;">Download Certificate</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                      <td style="padding: 30px; border-top: 1px solid #E5E7EB; background-color: #FAFAFA;">
+                        <p style="font-size: 14px; color: #111827; font-weight: 600; margin: 0 0 4px 0;">Prathamesh Bhil</p>
+                        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px 0;">Founder & Chief Executive Officer</p>
+                        <p style="font-size: 12px; color: #9CA3AF; margin: 0; text-align: center;">
+                          &copy; ${new Date().getFullYear()} Cosmolix Private Limited. All rights reserved.<br/>
+                          Pune, Maharashtra, India
+                        </p>
                       </td>
                     </tr>
                   </table>
-                </div>
-
-                <!-- Call to Action -->
-                <div style="text-align: center; margin-bottom: 40px;">
-                  <a href="${verificationLink}" style="display: inline-block; background-color: #E46A09; color: #FFFFFF; text-decoration: none; padding: 15px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(228,106,9,0.25);">DOWNLOAD CERTIFICATE (PDF)</a>
-                </div>
-
-                <hr style="border: none; border-top: 1px solid #EAE3D9; margin: 30px 0;" />
-                <p style="color: #1A1613; font-weight: 600; margin: 0; font-size: 15px;">Prathamesh Bhil</p>
-                <p style="color: #8A7E74; font-size: 13px; margin: 4px 0 14px;">Founder & Chief Executive Officer</p>
-                <hr style="border: none; border-top: 1px solid #EAE3D9; margin: 30px 0 20px;" />
-
-                <p style="color: #8A7E74; font-size: 12px; text-align: center; margin: 0 0 6px; font-weight: 500;">Cosmolix Private Limited | Pune, Maharashtra</p>
-              </div>
-            </div>
-          </div>
+                </td>
+              </tr>
+            </table>
+          </body>
+          </html>
         `,
       });
       return res.status(200).json({ success: true, message: "Certificate email sent successfully", response });
