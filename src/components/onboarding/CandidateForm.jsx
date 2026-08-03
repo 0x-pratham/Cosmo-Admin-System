@@ -4,13 +4,11 @@ import { FaCamera, FaCloudUploadAlt } from "react-icons/fa";
 import { FiChevronDown, FiChevronUp, FiCheckCircle } from "react-icons/fi";
 
 const CandidateForm = ({ candidate, setCandidate }) => {
-  // UI States
   const [activeSection, setActiveSection] = useState('personal');
   const [isDragging, setIsDragging] = useState(false);
   const [dateInput, setDateInput] = useState("");
   const fileInputRef = useRef(null);
 
-  // Handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCandidate((prev) => ({ ...prev, [name]: value }));
@@ -18,10 +16,9 @@ const CandidateForm = ({ candidate, setCandidate }) => {
 
   const handleDateChange = (e) => {
     const val = e.target.value;
-    setDateInput(val); // YYYY-MM-DD
+    setDateInput(val); 
     if (val) {
       const dateObj = new Date(val);
-      // Format to "02 August 2026"
       const formattedDate = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
       setCandidate((prev) => ({ ...prev, joiningDate: formattedDate }));
     } else {
@@ -29,27 +26,15 @@ const CandidateForm = ({ candidate, setCandidate }) => {
     }
   };
 
-  // Drag & Drop Handlers
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
+  const handleDragOver = (e) => { e.preventDefault(); setIsDragging(true); };
+  const handleDragLeave = () => { setIsDragging(false); };
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
     processFile(file);
   };
-
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    processFile(file);
-  };
+  const handlePhotoUpload = (e) => { processFile(e.target.files[0]); };
 
   const processFile = (file) => {
     if (!file || !file.type.startsWith('image/')) {
@@ -71,7 +56,6 @@ const CandidateForm = ({ candidate, setCandidate }) => {
     setActiveSection(activeSection === section ? '' : section);
   };
 
-  // Premium Styles
   const inputStyle = {
     width: '100%',
     padding: '12px 14px',
@@ -97,7 +81,6 @@ const CandidateForm = ({ candidate, setCandidate }) => {
 
   const requiredMark = <span style={{ color: '#E46A09', marginLeft: '4px' }}>*</span>;
 
-  // Accordion Header Component
   const SectionHeader = ({ id, title, completed }) => (
     <div 
         onClick={() => toggleSection(id)}
@@ -170,15 +153,27 @@ const CandidateForm = ({ candidate, setCandidate }) => {
               <label style={labelStyle}>Department {requiredMark}</label>
               <select style={inputStyle} name="department" value={candidate.department} onChange={handleChange}>
                 <option value="" disabled>Select Department</option>
-                <option value="Software Development">Software Development</option>
+                <option value="Software Engineering">Software Engineering</option>
                 <option value="UI/UX Design">UI/UX Design</option>
-                <option value="Human Resources">Human Resources</option>
-                <option value="Marketing & Sales">Marketing & Sales</option>
-                <option value="Cyber Security">Cyber Security</option>
+                <option value="Quality Assurance & Testing">Quality Assurance & Testing</option>
+                <option value="Digital Marketing & Growth">Digital Marketing & Growth</option>
+                <option value="Content Strategy & Social Media">Content Strategy & Social Media</option>
+                <option value="Business Development">Business Development</option>
+                <option value="Human Resources & Operations">Human Resources & Operations</option>
+                <option value="Client Success & Customer Relations">Client Success & Customer Relations</option>
+                <option value="Finance & Accounts">Finance & Accounts</option>
+                <option value="Project Management Office">Project Management Office</option>
+                <option value="Game Marketing">Game Marketing</option>
+                <option value="Full Stack Web Development">Full Stack Web Development</option>
+                <option value="Machine Learning & AI">Machine Learning & AI</option>
+                <option value="Cybersecurity & Ethical Hacking">Cybersecurity & Ethical Hacking</option>
+                <option value="Mobile App Development">Mobile App Development</option>
+                <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
+                <option value="Data Science & Analytics">Data Science & Analytics</option>
               </select>
 
               <label style={labelStyle}>Role {requiredMark}</label>
-              <input style={inputStyle} type="text" name="role" value={candidate.role} onChange={handleChange} placeholder="e.g. Full Stack Developer Intern" />
+              <input style={inputStyle} type="text" name="role" value={candidate.role} onChange={handleChange} placeholder="e.g. Cyber Security Research Intern" />
               
               <label style={labelStyle}>Joining Date {requiredMark}</label>
               <input 
