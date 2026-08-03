@@ -176,6 +176,12 @@ export default function CertificateDashboard() {
                 <option value="finance_accounts">Finance & Accounts</option>
                 <option value="project_coordination">Project Management Office</option>
                 <option value="game_marketing">Game Marketing</option>
+                <option value="fullstack">Full Stack Web Development</option>
+                <option value="ai_ml">Machine Learning & AI</option>
+                <option value="cybersecurity">Cybersecurity & Ethical Hacking</option>
+                <option value="mobileapp">Mobile App Development</option>
+                <option value="iot">Internet of Things (IoT)</option>
+                <option value="datascience">Data Science & Analytics</option>
               </select>
             </div>
 
