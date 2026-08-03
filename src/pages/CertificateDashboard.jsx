@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom" // Keep this import for the Back button
 import Certificate from "@/components/letter/Certificate"
 import LoadingButton from "@/components/ui/LoadingButton"
 import { domains } from "@/data/domains"
@@ -7,12 +8,13 @@ import { exportCertificatePdf } from "@/utils/exportCertificatePdf"
 import { saveCertificateToSupabase } from "@/utils/saveCertificateToSupabase"
 
 export default function CertificateDashboard() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     studentName: "Student Name",
     studentEmail: "",
     domainKey: "software_development",
-    startDate: "22 May 2026",
-    endDate: "22 August 2026",
+    startDate: "", // Changed to empty to let the date picker be blank initially
+    endDate: "",
   })
 
   const [certificateId, setCertificateId] = useState("")
@@ -62,6 +64,13 @@ export default function CertificateDashboard() {
     }
   }
 
+  // Format date helper for the certificate preview (turns "YYYY-MM-DD" into "DD Month YYYY")
+  const formatDateForPreview = (dateString) => {
+    if (!dateString) return "";
+    const dateObj = new Date(dateString);
+    return dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+  };
+
   const handleExportPdf = async () => {
     try {
       setIsExporting(true)
@@ -72,6 +81,10 @@ export default function CertificateDashboard() {
       }
 
       const selectedDomain = domains[formData.domainKey]
+      
+      // Use formatted dates for the actual PDF generation
+      const formattedStartDate = formatDateForPreview(formData.startDate) || formData.startDate;
+      const formattedEndDate = formatDateForPreview(formData.endDate) || formData.endDate;
 
       // 1. Generate & Upload PDF
       const pdfUrl = await exportCertificatePdf({
@@ -87,8 +100,8 @@ export default function CertificateDashboard() {
         domainKey: formData.domainKey,
         domainName: selectedDomain?.domainName ?? "",
         role: selectedDomain?.role ?? "",
-        startDate: formData.startDate,
-        endDate: formData.endDate,
+        startDate: formattedStartDate, // Save formatted date
+        endDate: formattedEndDate,     // Save formatted date
         pdfUrl,
       })
 
@@ -102,10 +115,10 @@ export default function CertificateDashboard() {
           studentEmail: formData.studentEmail,
           domainName: selectedDomain?.domainName ?? "",
           role: selectedDomain?.role ?? "",
-          startDate: formData.startDate,
-          endDate: formData.endDate,
+          startDate: formattedStartDate, // Send formatted date
+          endDate: formattedEndDate,     // Send formatted date
           certificateId: certificateId,
-          verificationLink: pdfUrl, // Sending the hosted PDF link
+          verificationLink: pdfUrl, 
         }),
       });
 
@@ -188,20 +201,22 @@ export default function CertificateDashboard() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Start Date</label>
+                {/* Changed to type="date" for calendar picker */}
                 <input
-                  type="text"
+                  type="date"
                   value={formData.startDate}
                   onChange={(e) => handleChange("startDate", e.target.value)}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black cursor-pointer"
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">End Date</label>
+                {/* Changed to type="date" for calendar picker */}
                 <input
-                  type="text"
+                  type="date"
                   value={formData.endDate}
                   onChange={(e) => handleChange("endDate", e.target.value)}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black cursor-pointer"
                 />
               </div>
             </div>
@@ -258,8 +273,8 @@ export default function CertificateDashboard() {
                 studentName={formData.studentName}
                 domainName={selectedDomain?.domainName ?? ""}
                 role={selectedDomain?.role ?? ""}
-                startDate={formData.startDate}
-                endDate={formData.endDate}
+                startDate={formatDateForPreview(formData.startDate) || formData.startDate}
+                endDate={formatDateForPreview(formData.endDate) || formData.endDate}
                 certificateId={certificateId}
               />
             </div>
@@ -271,8 +286,8 @@ export default function CertificateDashboard() {
                 studentName={formData.studentName}
                 domainName={selectedDomain?.domainName ?? ""}
                 role={selectedDomain?.role ?? ""}
-                startDate={formData.startDate}
-                endDate={formData.endDate}
+                startDate={formatDateForPreview(formData.startDate) || formData.startDate}
+                endDate={formatDateForPreview(formData.endDate) || formData.endDate}
                 certificateId={certificateId}
               />
             </div>
