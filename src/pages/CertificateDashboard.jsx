@@ -67,13 +67,19 @@ export default function CertificateDashboard() {
       setIsExporting(true)
       setExportError(null)
 
+      if (!formData.studentEmail) {
+        throw new Error("Student email is required to send the certificate.");
+      }
+
       const selectedDomain = domains[formData.domainKey]
 
+      // 1. Generate & Upload PDF
       const pdfUrl = await exportCertificatePdf({
         studentName: formData.studentName,
         certificateId,
       })
 
+      // 2. Save Data to Supabase Database
       await saveCertificateToSupabase({
         certificateId,
         studentName: formData.studentName,
@@ -86,10 +92,32 @@ export default function CertificateDashboard() {
         pdfUrl,
       })
 
-      alert("Certificate exported successfully")
+      // 3. Send Email to Candidate
+      const emailResponse = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "certificate",
+          studentName: formData.studentName,
+          studentEmail: formData.studentEmail,
+          domainName: selectedDomain?.domainName ?? "",
+          role: selectedDomain?.role ?? "",
+          startDate: formData.startDate,
+          endDate: formData.endDate,
+          certificateId: certificateId,
+          verificationLink: pdfUrl, // Sending the hosted PDF link
+        }),
+      });
+
+      const result = await emailResponse.json();
+      if (!emailResponse.ok || !result.success) {
+        throw new Error(result.message || "Certificate saved, but failed to send email.");
+      }
+
+      alert("Certificate Exported & Email Sent Successfully!");
     } catch (error) {
       console.error("CERTIFICATE EXPORT FAILED:", error)
-      setExportError(error.message || "Failed to export certificate.")
+      setExportError(error.message || "Failed to process certificate.")
     } finally {
       setIsExporting(false)
     }
@@ -126,6 +154,7 @@ export default function CertificateDashboard() {
                 value={formData.studentEmail}
                 onChange={(e) => handleChange("studentEmail", e.target.value)}
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black"
+                placeholder="e.g. john@example.com"
               />
             </div>
 
@@ -136,7 +165,6 @@ export default function CertificateDashboard() {
                 onChange={(e) => handleChange("domainKey", e.target.value)}
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-black bg-white"
               >
-                {/* NEW DOMAINS */}
                 <option value="software_development">Software Engineering</option>
                 <option value="uiux_design">UI/UX Design</option>
                 <option value="quality_assurance">Quality Assurance & Testing</option>
@@ -148,14 +176,6 @@ export default function CertificateDashboard() {
                 <option value="finance_accounts">Finance & Accounts</option>
                 <option value="project_coordination">Project Management Office</option>
                 <option value="game_marketing">Game Marketing</option>
-
-                {/* LEGACY DOMAINS (RETAINED FOR BACKWARD COMPATIBILITY) */}
-                <option value="fullstack">Full Stack Web Development</option>
-                <option value="ai_ml">Machine Learning & AI</option>
-                <option value="cybersecurity">Cybersecurity & Ethical Hacking</option>
-                <option value="mobileapp">Mobile App Development</option>
-                <option value="iot">Internet of Things (IoT)</option>
-                <option value="datascience">Data Science & Analytics</option>
               </select>
             </div>
 
@@ -213,7 +233,7 @@ export default function CertificateDashboard() {
             )}
 
             <LoadingButton loading={isExporting} onClick={handleExportPdf}>
-              Export Certificate PDF
+              Generate & Send Certificate
             </LoadingButton>
           </div>
         </div>
