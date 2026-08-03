@@ -1,30 +1,8 @@
-// src/components/letter/Certificate.jsx
-//
-// Landscape internship completion certificate, styled to match the
-// Cosmolix logo (black "C" bracket + orange forward-chevron).
-//
-// USAGE:
-//   <Certificate
-//     studentName="Jane Doe"
-//     domainName="Cybersecurity & Ethical Hacking"
-//     role="Cybersecurity Intern"
-//     startDate="22 May 2026"
-//     endDate="22 August 2026"
-//     certificateId="COSMOLIX-CERT-000123"
-//     issueDate="22 August 2026"
-//   />
-//
-// FONTS: add this to index.html <head> (or import in index.css) once:
-//   <link rel="preconnect" href="https://fonts.googleapis.com">
-//   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-//   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-//
-// ASSETS: update these three import paths to match the actual filenames
-// inside src/assets/logo, src/assets/signatures, src/assets/stamps.
 import logo from "@/assets/logo/logo.jpg"
 import signature from "@/assets/signatures/signature.png"
 import stamp from "@/assets/stamps/stamp1.png"
 import chevron from "@/assets/logo/chevron.png"
+
 export default function Certificate({
   studentName = "Student Name",
   domainName = "Domain Name",
@@ -38,8 +16,9 @@ export default function Certificate({
  
   return (
     <div
-      className="relative overflow-hidden bg-[#FAF6EF] mx-auto"
+      className="relative overflow-hidden mx-auto"
       style={{
+        backgroundColor: "#FAF6EF", // Moved from tailwind to style to prevent oklch error
         width: "1123px",
         height: "794px",
         fontFamily: "'Inter', sans-serif",
@@ -49,14 +28,14 @@ export default function Certificate({
       {/* ---------- Left panel ---------- */}
       <div
         className="absolute left-0 top-0 h-full"
-        style={{ width: "300px", background: "#171613", zIndex: 2 }}
+        style={{ width: "300px", backgroundColor: "#171613", zIndex: 2 }}
       >
         {/* Logo + wordmark — pinned to top */}
         <div style={{ position: "absolute", top: "48px", left: "36px", right: "36px" }}>
           <img src={logo} alt="Cosmolix" style={{ width: "56px", height: "56px" }} />
           <p
-            className="text-white"
             style={{
+              color: "#ffffff", // Explicitly hex to prevent oklch parsing bug
               marginTop: "20px",
               fontFamily: "'Fraunces', serif",
               fontSize: "22px",
@@ -81,7 +60,6 @@ export default function Certificate({
           </p>
         </div>
  
-
         <img
           src={chevron}
           alt=""
@@ -97,7 +75,7 @@ export default function Certificate({
  
         {/* Certificate ID — pinned to bottom */}
         <div style={{ position: "absolute", bottom: "78px", left: "36px", right: "36px" }}>
-          <div style={{ height: "1px", background: "rgba(232,147,74,0.35)", marginBottom: "14px" }} />
+          <div style={{ height: "1px", backgroundColor: "rgba(232,147,74,0.35)", marginBottom: "14px" }} />
           <p
             style={{
               color: "#8a8880",
@@ -111,7 +89,7 @@ export default function Certificate({
           </p>
           <p
             style={{
-              color: "#ffffff",
+              color: "#ffffff", // Explicit hex
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: "14px",
               letterSpacing: "0.06em",
@@ -198,7 +176,7 @@ export default function Certificate({
             <p style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#8a8880" }}>
               Issued on
             </p>
-            <p style={{ fontSize: "15px", fontWeight: 500, marginTop: "4px" }}>{issued}</p>
+            <p style={{ fontSize: "15px", fontWeight: 500, marginTop: "4px", color: "#171613" }}>{issued}</p>
           </div>
  
           <div className="flex items-end" style={{ gap: "98px" }}>
@@ -210,7 +188,7 @@ export default function Certificate({
             <div className="flex flex-col items-center">
               <img src={signature} alt="Authorized signature" style={{ height: "82px", objectFit: "contain" }} />
               <div style={{ width: "180px", borderTop: "1px solid #c9c6bc", marginTop: "8px" }} />
-              <p style={{ fontSize: "13px", fontWeight: 500, marginTop: "6px" }}>Authorized Signatory</p>
+              <p style={{ fontSize: "13px", fontWeight: 500, marginTop: "6px", color: "#171613" }}>Authorized Signatory</p>
               <p style={{ fontSize: "11px", color: "#8a8880" }}>Cosmolix Private Limited</p>
             </div>
           </div>
@@ -220,4 +198,3 @@ export default function Certificate({
     </div>
   )
 }
- 
