@@ -272,11 +272,11 @@ export default async function handler(req, res) {
                           You can download and verify your digital certificate below. We wish you the absolute best in your future endeavors!
                         </p>
 
-                        <!-- CTA -->
+                        <!-- CTA (Changed to Orange) -->
                         <table width="100%" cellpadding="0" cellspacing="0">
                           <tr>
                             <td align="center">
-                              <a href="${verificationLink}" style="background-color: #111827; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px; display: inline-block;">Download Certificate</a>
+                              <a href="${verificationLink}" style="background-color: #D35C18; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px; display: inline-block;">Download Certificate</a>
                             </td>
                           </tr>
                         </table>
