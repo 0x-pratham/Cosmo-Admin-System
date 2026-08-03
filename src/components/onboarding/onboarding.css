@@ -1,0 +1,444 @@
+/* Base wrapper specifically for onboarding styles to prevent global leaks */
+.onboarding-dashboard {
+  font-family: 'Google Sans Flex', sans-serif;
+  background: #EFECE6;
+  min-height: 100vh;
+}
+
+.onboarding-dashboard .onboarding-page {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.onboarding-dashboard .ticket-wrapper {
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
+}
+
+.onboarding-dashboard .ticket {
+  display: flex;
+  background: #FFFDF8;
+  border-radius: 28px;
+  width: 1220px;
+  min-height: 660px;
+  overflow: hidden; 
+  position: relative;
+}
+
+.onboarding-dashboard .ticket-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #FFFDF8;
+}
+
+.onboarding-dashboard .watermark-bg {
+  position: absolute;
+  top: 48%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  width: 52%;
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.onboarding-dashboard .main-content {
+  flex: 1;
+  display: flex;
+  padding: 45px 55px;
+  z-index: 1;
+}
+
+.onboarding-dashboard .left-col {
+  flex: 1.1;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.onboarding-dashboard .brand img {
+  height: 52px;
+  object-fit: contain;
+}
+
+.onboarding-dashboard .hero h1 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+}
+
+.onboarding-dashboard .orange-text {
+  color: #D35C18;
+}
+
+.onboarding-dashboard .welcome {
+  margin-top: 10px;
+}
+
+.onboarding-dashboard .welcome h2 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.onboarding-dashboard .welcome h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -14px;
+  width: 30px;
+  height: 2px;
+  background: #1a1a1a;
+}
+
+.onboarding-dashboard .welcome p {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.onboarding-dashboard .signature {
+  margin-top: 20px;
+}
+
+.onboarding-dashboard .signature-font {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-size: 32px;
+  color: #111;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+
+.onboarding-dashboard .signature-name {
+  font-family: 'Times New Roman', Times, serif;
+  color: #D35C18;
+  font-size: 15px;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.onboarding-dashboard .signature-role {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 11px;
+  color: #666;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.onboarding-dashboard .center-col {
+  flex: 1;
+  padding-left: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.onboarding-dashboard .photo-container {
+  width: 140px;
+  height: 170px;
+  border: 2px solid #D35C18;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.onboarding-dashboard .photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.onboarding-dashboard .photo-label {
+  font-family: 'Google Sans Flex', sans-serif;
+  color: #D35C18;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin-bottom: 35px;
+}
+
+.onboarding-dashboard .details-list {
+  width: 100%;
+}
+
+.onboarding-dashboard .detail-row {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
+.onboarding-dashboard .detail-row .label {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #D35C18;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.onboarding-dashboard .detail-row .dots {
+  flex: 1;
+  border-bottom: 1.5px dashed #D4D4D4;
+  margin: 0 10px;
+  position: relative;
+  top: -4px;
+}
+
+.onboarding-dashboard .detail-row .value {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+}
+
+.onboarding-dashboard .main-footer {
+  background: linear-gradient(90deg, #191919 0%, #B84707 35%, #E67323 100%);
+  height: 100px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.onboarding-dashboard .footer-black-corner {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 170px;
+  height: 100%;
+  background: #191919;
+  clip-path: polygon(0 30%, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+.onboarding-dashboard .footer-badges {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 30px 0 110px;
+}
+
+.onboarding-dashboard .badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+.onboarding-dashboard .badge-icon {
+  opacity: 0.95;
+  color: #fff;
+}
+
+.onboarding-dashboard .badge span {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.4px;
+}
+
+.onboarding-dashboard .badge-divider {
+  height: 35px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.onboarding-dashboard .ticket-divider {
+  width: 0;
+  border-left: 2px dashed #D4D4D4;
+  position: relative;
+  z-index: 10;
+}
+
+.onboarding-dashboard .cut-top, 
+.onboarding-dashboard .cut-bottom {
+  position: absolute;
+  left: -15px;
+  width: 30px;
+  height: 15px;
+  background: #EFECE6; 
+}
+
+.onboarding-dashboard .cut-top {
+  top: 0;
+  border-radius: 0 0 15px 15px;
+}
+
+.onboarding-dashboard .cut-bottom {
+  bottom: 0;
+  border-radius: 15px 15px 0 0;
+}
+
+.onboarding-dashboard .ticket-stub {
+  width: 310px;
+  display: flex;
+  flex-direction: column;
+  background: #FFFDF8;
+  position: relative;
+}
+
+.onboarding-dashboard .stub-content {
+  padding: 35px 25px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.onboarding-dashboard .qr-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.onboarding-dashboard .qr-box {
+  border: 2px solid #D35C18;
+  padding: 10px;
+  border-radius: 14px;
+  display: inline-block;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.onboarding-dashboard .qr-container p {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+.onboarding-dashboard .stub-divider {
+  width: 100%;
+  border-bottom: 1px solid #EAEAEA;
+  margin-bottom: 25px;
+}
+
+.onboarding-dashboard .side-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.onboarding-dashboard .side-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.onboarding-dashboard .icon-box {
+  color: #D35C18;
+  border: 1px solid #F0D9CB;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFF9F5;
+  flex-shrink: 0;
+}
+
+.onboarding-dashboard .item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.onboarding-dashboard .item-text label {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #666;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.onboarding-dashboard .val-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.onboarding-dashboard .val-text {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #222;
+  padding-right: 4px;
+  white-space: nowrap;
+}
+
+.onboarding-dashboard .val-line {
+  flex: 1;
+  border-bottom: 1.5px dashed #D4D4D4;
+  position: relative;
+  top: -3px;
+}
+
+.onboarding-dashboard .stub-footer {
+  background: #191919;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
+  position: relative;
+}
+
+.onboarding-dashboard .cursive-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-size: 25px;
+  font-weight: 700;
+  color: #D35C18;
+  margin-bottom: 3px;
+  margin-top: 10px;
+}
+
+.onboarding-dashboard .stub-footer p {
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #999;
+}
+
+.onboarding-dashboard .footer-dot-decor {
+  margin-top: 8px;
+  display: flex;
+  gap: 5px;
+}
+
+.onboarding-dashboard .footer-dot-decor span {
+  width: 3.5px;
+  height: 3.5px;
+  background: #666;
+  border-radius: 50%;
+}
