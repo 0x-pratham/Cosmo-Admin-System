@@ -574,7 +574,7 @@ export const domains = {
 
     unity_game_development: {
     domainName: "Unity Game Development",
-    role: "Unity Game Development Intern",
+    role: "Unity Game Developer Intern",
     duration: "3 Months",
     mode: ["Online", "Hybrid"],
     overview:
