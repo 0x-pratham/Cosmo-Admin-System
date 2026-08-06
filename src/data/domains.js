@@ -570,5 +570,43 @@ export const domains = {
       "Mentorship by Gaming Strategists",
       "Internship Completion Certificate with Grade"
     ]
+  },
+
+    unity_game_development: {
+    domainName: "Unity Game Development",
+    role: "Unity Game Development Intern",
+    duration: "3 Months",
+    mode: ["Online", "Hybrid"],
+    overview:
+      "The Unity Game Development internship program provides practical experience in designing, developing, and deploying interactive 2D and 3D games using the Unity Engine. Interns gain hands-on exposure to game mechanics, physics systems, UI development, scripting, optimization, and collaborative game production workflows aligned with industry practices.",
+    technologies: [
+      "Unity Engine",
+      "C# Programming",
+      "Unity Physics",
+      "Animation System",
+      "UI Toolkit / Canvas",
+      "Shader Graph Basics",
+      "Git & GitHub",
+      "2D & 3D Game Development",
+      "Game Optimization",
+      "Build & Deployment"
+    ],
+    activities: [
+      "Develop interactive 2D and 3D game mechanics.",
+      "Implement player movement and gameplay systems.",
+      "Design UI and in-game menus.",
+      "Integrate animations, audio, and particle effects.",
+      "Optimize game performance for multiple platforms.",
+      "Collaborate on complete game development projects."
+    ],
+    benefits: [
+      "Hands-On Unity Development Experience",
+      "Professional Game Development Workflow",
+      "Portfolio-Ready Game Projects",
+      "Mentorship from Experienced Game Developers",
+      "Industry-Oriented Practical Learning",
+      "Internship Completion Certificate with Grade"
+    ]
   }
-}
+
+};

@@ -170,6 +170,7 @@ const CandidateForm = ({ candidate, setCandidate }) => {
                 <option value="Mobile App Development">Mobile App Development</option>
                 <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
                 <option value="Data Science & Analytics">Data Science & Analytics</option>
+                <option value="Unity Game Development">Unity Game Development</option>
               </select>
 
               <label style={labelStyle}>Role {requiredMark}</label>

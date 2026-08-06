@@ -368,6 +368,7 @@ export default function Dashboard() {
                 <option value="mobileapp">Mobile App Development</option>
                 <option value="iot">Internet of Things (IoT)</option>
                 <option value="datascience">Data Science & Analytics</option>
+                <option value="unity_game_development">Unity Game Development</option>
               </select>
             </div>
 
