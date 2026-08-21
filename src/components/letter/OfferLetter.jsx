@@ -12,10 +12,12 @@ export default function OfferLetter({
   startDate = "22 May 2026",
   endDate = "22 August 2026",
   offerId = "CPL/INT/2026/001",
+  dateOfIssue, // Added Date of Issue Prop
 }) {
   const domain = domains[domainKey] ?? domains.cybersecurity
 
-  const now = new Date()
+  // Use the selected date or current date if none provided
+  const now = dateOfIssue ? new Date(dateOfIssue) : new Date()
   const year = now.getFullYear()
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const month = months[now.getMonth()]
