@@ -1,6 +1,6 @@
 import logo from "@/assets/logo/logo.jpg"
-import signature from "@/assets/signatures/signature.png"
-import stamp from "@/assets/stamps/stamp1.png"
+import signature from "@/assets/signatures/signature1.png"
+import stamp from "@/assets/stamps/stamp1.svg"
 import chevron from "@/assets/logo/chevron.png"
 
 export default function Certificate({

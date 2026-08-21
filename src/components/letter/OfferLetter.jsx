@@ -1,6 +1,6 @@
 import logo from "@/logo/cosmolix-logo.png"
-import stamp1 from "@/assets/stamps/stamp1.png"
-import signature from "@/assets/signatures/signature.png"
+import stamp1 from "@/assets/stamps/stamp1.svg"
+import signature from "@/assets/signatures/signature1.png"
 import VerificationQR from "@/components/ui/VerificationQR"
 import { domains } from "@/data/domains"
 
@@ -87,7 +87,7 @@ export default function OfferLetter({
                     CIN : U62099PN2026PTC252282
                   </p>
                   <p className="text-[10.5pt] font-semibold m-0" style={{ color: colors.secondary }}>
-                    ISO 9001:2015 Certified | MSME Registered
+                    ISO/IEC 27001:2022 Certified | MSME Registered
                   </p>
                 </div>
               </div>
@@ -189,12 +189,12 @@ export default function OfferLetter({
                 <img 
                   src={signature} 
                   alt="Authorized Signatory" 
-                  className="w-24 object-contain ml-auto mix-blend-multiply -mb-2" 
+                  className="w-28 object-contain ml-auto mix-blend-multiply -mb-1" 
                   style={{ imageRendering: "-webkit-optimize-contrast" }}
                 />
                 <div className="border-t pt-1 w-44 ml-auto" style={{ borderColor: colors.primary }}>
-                  <p className="font-bold text-[11pt] m-0">Prathamesh Bhil</p>
-                  <p className="text-[10pt] m-0" style={{ color: colors.muted }}>Chief Executive Officer</p>
+                  <p className="font-bold text-[11pt] m-0">Ms. Pranali Sonar</p>
+                  <p className="text-[10pt] m-0" style={{ color: colors.muted }}>HR</p>
                   <p className="text-[9.5pt] font-semibold uppercase m-0" style={{ color: colors.secondary }}>Cosmolix Private Limited</p>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function OfferLetter({
 
           {/* Footer */}
           <footer className="mt-3 pt-2 border-t text-center text-[9.5pt]" style={{ borderColor: colors.border, color: colors.muted }}>
-            <p className="m-0">ISO 9001:2015 Certified | MSME Registered Enterprise</p>
+            <p className="m-0">ISO/IEC 27001:2022 Certified | MSME Registered Enterprise</p>
             <p className="m-0">www.cosmolix.co.in | info@cosmolix.co.in | Registered Office Location: Ambethan, Khed, Pune-410501 Maharashtra</p>
           </footer>
         </div>

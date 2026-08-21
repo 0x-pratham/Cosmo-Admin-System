@@ -52,7 +52,7 @@ export default async function handler(req, res) {
               <tr>
                 <td align="center">
                   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
-                    
+
                     <!-- Header -->
                     <tr>
                       <td style="background-color: #1A1613; padding: 40px 30px; text-align: center;">
@@ -110,8 +110,8 @@ export default async function handler(req, res) {
                     <!-- Footer -->
                     <tr>
                       <td style="padding: 30px; border-top: 1px solid #E5E7EB; background-color: #FAFAFA;">
-                        <p style="font-size: 14px; color: #111827; font-weight: 600; margin: 0 0 4px 0;">Prathamesh Bhil</p>
-                        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px 0;">Founder & Chief Executive Officer</p>
+                        <p style="font-size: 14px; color: #111827; font-weight: 600; margin: 0 0 4px 0;">Ms. Pranali Sonar</p>
+                        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px 0;">HR</p>
                         <p style="font-size: 12px; color: #9CA3AF; margin: 0; text-align: center;">
                           &copy; ${new Date().getFullYear()} Cosmolix Private Limited. All rights reserved.<br/>
                           Pune, Maharashtra, India
@@ -145,7 +145,7 @@ export default async function handler(req, res) {
               <tr>
                 <td align="center">
                   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
-                    
+
                     <!-- Header -->
                     <tr>
                       <td style="background-color: #1A1613; padding: 40px 30px; text-align: center;">
@@ -234,7 +234,7 @@ export default async function handler(req, res) {
               <tr>
                 <td align="center">
                   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
-                    
+
                     <!-- Header -->
                     <tr>
                       <td style="background-color: #1A1613; padding: 40px 30px; text-align: center;">
@@ -286,8 +286,8 @@ export default async function handler(req, res) {
                     <!-- Footer -->
                     <tr>
                       <td style="padding: 30px; border-top: 1px solid #E5E7EB; background-color: #FAFAFA;">
-                        <p style="font-size: 14px; color: #111827; font-weight: 600; margin: 0 0 4px 0;">Prathamesh Bhil</p>
-                        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px 0;">Founder & Chief Executive Officer</p>
+                        <p style="font-size: 14px; color: #111827; font-weight: 600; margin: 0 0 4px 0;">Ms. Pranali Sonar</p>
+                        <p style="font-size: 13px; color: #6B7280; margin: 0 0 20px 0;">HR</p>
                         <p style="font-size: 12px; color: #9CA3AF; margin: 0; text-align: center;">
                           &copy; ${new Date().getFullYear()} Cosmolix Private Limited. All rights reserved.<br/>
                           Pune, Maharashtra, India
