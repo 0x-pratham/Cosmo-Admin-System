@@ -21,6 +21,7 @@ export default function Dashboard() {
     domainKey: "software_development",
     startDate: "2026-05-22",
     endDate: "2026-08-22",
+    dateOfIssue: new Date().toISOString().split("T")[0], // Added Date of Issue
     mode: "Hybrid",
   })
 
@@ -73,6 +74,7 @@ export default function Dashboard() {
       const pdfUrl = await exportOfferLetterPdf({
         studentName: formData.studentName,
         offerId,
+        dateOfIssue: formData.dateOfIssue,
       })
 
       await saveOfferToSupabase({
@@ -86,6 +88,7 @@ export default function Dashboard() {
         role: selectedDomain?.role ?? "",
         startDate: formData.startDate,
         endDate: formData.endDate,
+        dateOfIssue: formData.dateOfIssue,
         mode: formData.mode,
         pdfUrl,
       })
@@ -368,6 +371,7 @@ export default function Dashboard() {
                 <option value="mobileapp">Mobile App Development</option>
                 <option value="iot">Internet of Things (IoT)</option>
                 <option value="datascience">Data Science & Analytics</option>
+                <option value="unity_game_development">Unity Game Development</option>
               </select>
             </div>
 
@@ -422,6 +426,33 @@ export default function Dashboard() {
                   }}
                 />
               </div>
+            </div>
+
+            {/* Added Date of Issue Field */}
+            <div>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: "#1C1816" }}
+              >
+                Date of Issue
+              </label>
+              <input
+                type="date"
+                value={formData.dateOfIssue}
+                onChange={(e) => handleChange("dateOfIssue", e.target.value)}
+                className="w-full rounded-2xl px-5 py-3.5 outline-none transition-all duration-300"
+                style={{
+                  border: "1px solid #E8DDD5",
+                  background: "#FFFFFF",
+                  color: "#1C1816",
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#D3600B"
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "#E8DDD5"
+                }}
+              />
             </div>
 
             <div
