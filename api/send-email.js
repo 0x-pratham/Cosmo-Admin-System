@@ -318,7 +318,7 @@ import { Resend } from "resend";
                             <tr>
                               <td>
                                 <p style="font-size: 12px; color: #6828a2; margin: 0 0 4px 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Event Date</p>
-                                <p style="font-size: 15px; color: #1b053e; margin: 0; font-weight: 600;">${startDate} to ${endDate}</p>
+                                <p style="font-size: 15px; color: #1b053e; margin: 0; font-weight: 600;">${startDate}</p>
                               </td>
                             </tr>
                           </table>
