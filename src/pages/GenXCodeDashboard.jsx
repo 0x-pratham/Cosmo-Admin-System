@@ -5,8 +5,6 @@ import LoadingButton from "@/components/ui/LoadingButton"
 import { getNextCertificateId } from "@/utils/getNextCertificateId"
 import { exportCertificatePdf } from "@/utils/exportCertificatePdf"
 import { saveCertificateToSupabase } from "@/utils/saveCertificateToSupabase"
-
-// Make sure to import your GenXCode domains here
 import { genxcodeDomains } from "@/data/genxcodeDomains"
 
 export default function GenXCodeDashboard() {
@@ -15,7 +13,7 @@ export default function GenXCodeDashboard() {
   const [formData, setFormData] = useState({
     studentName: "Student Name",
     studentEmail: "",
-    domainKey: "aws_workshop", // Updated default track
+    domainKey: "arcade_event",
     startDate: "",
     endDate: "",
   })
@@ -32,23 +30,23 @@ export default function GenXCodeDashboard() {
   const [scale, setScale] = useState(1)
 
   useEffect(() => {
-    const el = previewRef.current
-    if (!el) return
+    const element = previewRef.current
+    if (!element) return
 
     const updateScale = () => {
-      const availableWidth = el.clientWidth
+      const availableWidth = element.clientWidth
       setScale(Math.min(availableWidth / CERT_WIDTH, 1))
     }
 
     updateScale()
 
     const observer = new ResizeObserver(updateScale)
-    observer.observe(el)
+    observer.observe(element)
 
     return () => observer.disconnect()
   }, [])
 
-  // Auto-generate ID on load
+  // Generate the initial certificate ID.
   useEffect(() => {
     const generateInitialId = async () => {
       try {
@@ -67,33 +65,33 @@ export default function GenXCodeDashboard() {
   }, [])
 
   const handleChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((previous) => ({
+      ...previous,
       [field]: value,
     }))
 
     if (field === "domainKey" && !isIdEditable) {
       getNextCertificateId(value, "GENX")
         .then(setCertificateId)
-        .catch((error) =>
+        .catch((error) => {
           console.error("DOMAIN CERT ID ERROR:", error)
-        )
+        })
     }
   }
 
   const formatDateForPreview = (dateString) => {
     if (!dateString) return ""
 
-    const dateObj = new Date(dateString)
+    const date = new Date(dateString)
 
-    return dateObj.toLocaleDateString("en-GB", {
+    return date.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "long",
       year: "numeric",
     })
   }
 
-  // Selected GenXCode event
+  // Selected GenXCode event.
   const selectedDomain = genxcodeDomains[formData.domainKey]
 
   const handleExportPdf = async () => {
@@ -101,8 +99,16 @@ export default function GenXCodeDashboard() {
       setIsExporting(true)
       setExportError(null)
 
-      if (!formData.studentEmail) {
+      if (!formData.studentName.trim()) {
+        throw new Error("Student name is required.")
+      }
+
+      if (!formData.studentEmail.trim()) {
         throw new Error("Student email is required.")
+      }
+
+      if (!certificateId.trim()) {
+        throw new Error("Certificate ID is required.")
       }
 
       const formattedStartDate =
@@ -113,24 +119,27 @@ export default function GenXCodeDashboard() {
         formatDateForPreview(formData.endDate) ||
         formData.endDate
 
+      // Export the certificate PDF.
       const pdfUrl = await exportCertificatePdf({
         studentName: formData.studentName,
         certificateId,
         template: "genxcode",
       })
 
+      // Save certificate details to Supabase.
       await saveCertificateToSupabase({
         certificateId,
         studentName: formData.studentName,
         studentEmail: formData.studentEmail,
         domainKey: formData.domainKey,
-        domainName: selectedDomain?.domainName || "AWS Cloud Workshop",
-        role: selectedDomain?.role || "Participant",
+        domainName: selectedDomain?.domainName ?? "",
+        role: selectedDomain?.role ?? "",
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         pdfUrl,
       })
 
+      // Send the certificate email.
       const emailResponse = await fetch("/api/send-email", {
         method: "POST",
         headers: {
@@ -140,8 +149,8 @@ export default function GenXCodeDashboard() {
           type: "genxcode_certificate",
           studentName: formData.studentName,
           studentEmail: formData.studentEmail,
-          domainName: selectedDomain?.domainName || "AWS Cloud Workshop",
-          role: selectedDomain?.role || "Participant",
+          domainName: selectedDomain?.domainName ?? "",
+          role: selectedDomain?.role ?? "",
           startDate: formattedStartDate,
           endDate: formattedEndDate,
           certificateId,
@@ -157,12 +166,32 @@ export default function GenXCodeDashboard() {
         )
       }
 
+      // Confirm successful certificate export and email delivery.
       alert(
-        "AWS Workshop Certificate Exported & Email Sent Successfully!"
+        "GenXCode Certificate Exported & Email Sent Successfully!"
       )
+
+      // Generate a fresh certificate ID for the next student.
+      const newId = await getNextCertificateId(
+        formData.domainKey,
+        "GENX"
+      )
+
+      setCertificateId(newId)
+
+      // Clear student details while preserving the selected event and dates.
+      setFormData((previous) => ({
+        ...previous,
+        studentName: "",
+        studentEmail: "",
+      }))
     } catch (error) {
+      console.error("CERTIFICATE EXPORT ERROR:", error)
+
       setExportError(
-        error.message || "Failed to process certificate."
+        error instanceof Error
+          ? error.message
+          : "Failed to process certificate."
       )
     } finally {
       setIsExporting(false)
@@ -171,11 +200,10 @@ export default function GenXCodeDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      <div className="max-w-[1600px] mx-auto grid grid-cols-[420px_1fr] gap-8 p-8">
+      <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-8 p-4 md:p-8 lg:grid-cols-[420px_minmax(0,1fr)]">
 
         {/* Form Section */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-[28px] shadow-xl border border-purple-100 p-8 h-fit sticky top-8">
-
+        <section className="h-fit rounded-[28px] border border-purple-100 bg-white/80 p-6 shadow-xl backdrop-blur-xl md:p-8 lg:sticky lg:top-8">
           <div className="mb-8">
             <h2
               className="text-2xl font-bold text-[#1b053e]"
@@ -183,11 +211,11 @@ export default function GenXCodeDashboard() {
                 fontFamily: '"Times New Roman", serif',
               }}
             >
-              GenXCode x AWS Certificate
+              GenXCode Certificate
             </h2>
 
-            <p className="text-sm text-gray-500 mt-1">
-              Issue specialized GenXCode AWS Cloud Workshop completion certificates.
+            <p className="mt-1 text-sm text-gray-500">
+              Issue specialized GenXCode completion certificates.
             </p>
           </div>
 
@@ -195,53 +223,68 @@ export default function GenXCodeDashboard() {
 
             {/* Student Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="studentName"
+                className="mb-2 block text-sm font-semibold text-gray-700"
+              >
                 Student Full Name
               </label>
 
               <input
+                id="studentName"
                 type="text"
+                autoComplete="name"
                 value={formData.studentName}
-                onChange={(e) =>
-                  handleChange("studentName", e.target.value)
+                onChange={(event) =>
+                  handleChange("studentName", event.target.value)
                 }
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#6828a2]"
+                disabled={isExporting}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-[#6828a2] disabled:opacity-60"
+                placeholder="Enter student full name"
               />
             </div>
 
             {/* Student Email */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="studentEmail"
+                className="mb-2 block text-sm font-semibold text-gray-700"
+              >
                 Student Email
               </label>
 
               <input
+                id="studentEmail"
                 type="email"
+                autoComplete="email"
                 value={formData.studentEmail}
-                onChange={(e) =>
-                  handleChange("studentEmail", e.target.value)
+                onChange={(event) =>
+                  handleChange("studentEmail", event.target.value)
                 }
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#6828a2]"
+                disabled={isExporting}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-[#6828a2] disabled:opacity-60"
+                placeholder="student@example.com"
               />
             </div>
 
             {/* Event Track */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="domainKey"
+                className="mb-2 block text-sm font-semibold text-gray-700"
+              >
                 Event Track
               </label>
 
               <select
+                id="domainKey"
                 value={formData.domainKey}
-                onChange={(e) =>
-                  handleChange("domainKey", e.target.value)
+                onChange={(event) =>
+                  handleChange("domainKey", event.target.value)
                 }
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#6828a2] bg-white"
+                disabled={isExporting}
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#6828a2] disabled:opacity-60"
               >
-                <option value="aws_workshop">
-                  AWS Cloud Workshop
-                </option>
-
                 <option value="arcade_event">
                   GenXCode Arcade
                 </option>
@@ -257,113 +300,120 @@ export default function GenXCodeDashboard() {
             </div>
 
             {/* Dates */}
-            <div className="grid grid-cols-2 gap-4">
-
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  htmlFor="startDate"
+                  className="mb-2 block text-sm font-semibold text-gray-700"
+                >
                   Start Date
                 </label>
 
                 <input
+                  id="startDate"
                   type="date"
                   value={formData.startDate}
-                  onChange={(e) =>
-                    handleChange("startDate", e.target.value)
+                  onChange={(event) =>
+                    handleChange("startDate", event.target.value)
                   }
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#6828a2] cursor-pointer"
+                  disabled={isExporting}
+                  className="w-full cursor-pointer rounded-xl border border-gray-300 px-3 py-3 outline-none focus:border-[#6828a2] disabled:opacity-60"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  htmlFor="endDate"
+                  className="mb-2 block text-sm font-semibold text-gray-700"
+                >
                   End Date
                 </label>
 
                 <input
+                  id="endDate"
                   type="date"
                   value={formData.endDate}
-                  onChange={(e) =>
-                    handleChange("endDate", e.target.value)
+                  onChange={(event) =>
+                    handleChange("endDate", event.target.value)
                   }
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#6828a2] cursor-pointer"
+                  disabled={isExporting}
+                  className="w-full cursor-pointer rounded-xl border border-gray-300 px-3 py-3 outline-none focus:border-[#6828a2] disabled:opacity-60"
                 />
               </div>
-
             </div>
 
             {/* Certificate ID */}
-            <div className="bg-gradient-to-br from-[#1b053e] to-[#3d126b] rounded-3xl p-6 shadow-lg">
-
-              <div className="flex items-center justify-between">
-
+            <div className="rounded-3xl bg-gradient-to-br from-[#1b053e] to-[#3d126b] p-6 shadow-lg">
+              <div className="flex items-center justify-between gap-3">
                 <p className="text-xs uppercase tracking-[0.25em] text-[#c7a6f3]">
                   Certificate No.
                 </p>
 
                 <button
                   type="button"
+                  disabled={isExporting}
                   onClick={() =>
-                    setIsIdEditable((prev) => !prev)
+                    setIsIdEditable((previous) => !previous)
                   }
-                  className="text-[11px] font-semibold text-white hover:text-gray-200"
+                  className="text-[11px] font-semibold text-white hover:text-gray-200 disabled:opacity-60"
                 >
                   {isIdEditable ? "Lock" : "Edit"}
                 </button>
-
               </div>
 
               {isIdEditable ? (
                 <input
                   type="text"
+                  aria-label="Certificate ID"
                   value={certificateId}
-                  onChange={(e) =>
-                    setCertificateId(e.target.value)
+                  onChange={(event) =>
+                    setCertificateId(event.target.value)
                   }
-                  className="mt-3 w-full bg-[#1b053e] text-white text-lg font-bold tracking-[0.1em] rounded-lg px-3 py-2 outline-none border border-[#6828a2] focus:border-[#c7a6f3]"
+                  disabled={isExporting}
+                  className="mt-3 w-full rounded-lg border border-[#6828a2] bg-[#1b053e] px-3 py-2 text-lg font-bold tracking-[0.1em] text-white outline-none focus:border-[#c7a6f3] disabled:opacity-60"
                 />
               ) : (
-                <p className="mt-3 text-xl font-bold text-white tracking-[0.18em] break-all">
-                  {certificateId}
+                <p className="mt-3 break-all text-xl font-bold tracking-[0.18em] text-white">
+                  {certificateId || "Generating ID..."}
                 </p>
               )}
-
             </div>
 
             {/* Export Error */}
             {exportError && (
-              <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+              <div
+                role="alert"
+                className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600"
+              >
                 {exportError}
               </div>
             )}
 
-            {/* Generate */}
+            {/* Generate Certificate */}
             <LoadingButton
               loading={isExporting}
               onClick={handleExportPdf}
             >
-              Generate AWS Certificate
+              Generate GenXCode Certificate
             </LoadingButton>
-
           </div>
-        </div>
+        </section>
 
-        {/* =========================================================
-            Preview Section
-        ========================================================== */}
-        <div
+        {/* Certificate Preview */}
+        <section
           ref={previewRef}
-          className="pb-20"
+          className="min-w-0 overflow-hidden pb-20"
           style={{
             width: "100%",
             position: "relative",
           }}
         >
-
-          {/* 1. Visible Preview (Scaled for Screen) */}
+          {/* Visible Preview */}
           <div
             style={{
               width: CERT_WIDTH * scale,
               height: CERT_HEIGHT * scale,
+              maxWidth: "100%",
             }}
           >
             <div
@@ -376,8 +426,8 @@ export default function GenXCodeDashboard() {
             >
               <GenXCodeCertificate
                 studentName={formData.studentName}
-                domainName={selectedDomain?.domainName || "AWS Cloud Workshop"}
-                role={selectedDomain?.role || "Participant"}
+                domainName={selectedDomain?.domainName ?? ""}
+                role={selectedDomain?.role ?? ""}
                 startDate={
                   formatDateForPreview(formData.startDate) ||
                   formData.startDate
@@ -391,28 +441,30 @@ export default function GenXCodeDashboard() {
             </div>
           </div>
 
-          {/* 2. Hidden Render Target */}
+          {/* Hidden Full-Resolution PDF Render Target */}
           <div
+            aria-hidden="true"
             style={{
               position: "absolute",
-              left: 0,
+              left: "-9999px",
               top: 0,
-              opacity: 0,
+              width: CERT_WIDTH,
+              height: CERT_HEIGHT,
+              overflow: "hidden",
               pointerEvents: "none",
-              zIndex: -10,
             }}
           >
             <div
               id="certificate-render-target"
               style={{
-                width: 1123,
-                height: 794,
+                width: CERT_WIDTH,
+                height: CERT_HEIGHT,
               }}
             >
               <GenXCodeCertificate
                 studentName={formData.studentName}
-                domainName={selectedDomain?.domainName || "AWS Cloud Workshop"}
-                role={selectedDomain?.role || "Participant"}
+                domainName={selectedDomain?.domainName ?? ""}
+                role={selectedDomain?.role ?? ""}
                 startDate={
                   formatDateForPreview(formData.startDate) ||
                   formData.startDate
@@ -425,8 +477,7 @@ export default function GenXCodeDashboard() {
               />
             </div>
           </div>
-
-        </div>
+        </section>
       </div>
     </div>
   )

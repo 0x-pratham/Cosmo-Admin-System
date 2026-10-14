@@ -21,22 +21,36 @@ const DOMAIN_PREFIXES = {
   finance_accounts: "FIN",
   project_coordination: "PMO",
   game_marketing: "GMK",
-  unity_game_development: "UGD", // Added based on your earlier dropdown
+  unity_game_development: "UGD",
+  aws_workshop: "AWS", // Added for the new workshop
 }
 
 export async function getNextCertificateId(domainKey, brand = "COSMOLIX") {
   const prefix = DOMAIN_PREFIXES[domainKey] || "GEN"
+  const searchPattern = `${brand}-${prefix}-%`
   
-  // .ilike ensure karega ki wo sirf usi brand ke certificates count kare
-  const { count, error } = await supabase
+  // Find the absolute latest certificate for this specific brand and domain
+  const { data, error } = await supabase
     .from("certificates")
-    .select("*", { count: "exact", head: true })
-    .eq("domain_key", domainKey)
-    .ilike("certificate_id", `${brand}-%`) 
+    .select("certificate_id")
+    .ilike("certificate_id", searchPattern)
+    .order("created_at", { ascending: false })
+    .limit(1)
 
-  if (error) throw error
+  if (error) {
+    console.error("Error fetching last ID:", error)
+    throw error
+  }
 
-  const nextNumber = (count ?? 0) + 1
+  // If no certificates exist yet, start with 0001
+  if (!data || data.length === 0) {
+    return `${brand}-${prefix}-0001`
+  }
+
+  // Extract the actual last number, increment, and pad
+  const lastId = data[0].certificate_id
+  const lastNumber = parseInt(lastId.split("-").pop(), 10)
+  const nextNumber = lastNumber + 1
   const padded = String(nextNumber).padStart(4, "0")
 
   return `${brand}-${prefix}-${padded}`
