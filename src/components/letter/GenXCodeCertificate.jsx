@@ -44,24 +44,34 @@ export default function GenXCodeCertificate({
       >
         {/* Top: Logo & Brand Name */}
         <div style={{ padding: "72px 48px 0" }}>
-          <img 
-            src="/icon.png" 
-            alt="GenXCode" 
-            crossOrigin="anonymous"
-            style={{ width: "64px", height: "64px", objectFit: "contain", marginBottom: "24px" }} 
-          />
+          <div className="flex items-center gap-4 mb-6">
+            <img 
+              src="/icon.png" 
+              alt="GenXCode" 
+              crossOrigin="anonymous"
+              style={{ width: "56px", height: "56px", objectFit: "contain", borderRadius: "8px" }} 
+            />
+            <span style={{ color: "#c7a6f3", fontSize: "20px", fontWeight: 300 }}>X</span>
+            <img 
+              src="/aws.jpeg" 
+              alt="AWS" 
+              crossOrigin="anonymous"
+              style={{ width: "56px", height: "56px", objectFit: "contain", borderRadius: "8px", backgroundColor: "#fff" }} 
+            />
+          </div>
 
           <h2
             style={{
               color: "#ffffff",
               fontFamily: '"Times New Roman", serif',
-              fontSize: "32px",
+              fontSize: "28px",
               fontWeight: 700,
               letterSpacing: "0.02em",
-              lineHeight: 1.1,
+              lineHeight: 1.2,
             }}
           >
-            GenXCode
+            GenXCode <br />
+            AWS Workshop
           </h2>
 
           <p
@@ -219,7 +229,7 @@ export default function GenXCodeCertificate({
             </strong>{" "}
             in the{" "}
             <strong style={{ color: "#160431", fontWeight: 700 }}>
-              {domainName}
+              AWS Cloud Workshop
             </strong>{" "}
             organized by{" "}
             <strong style={{ color: "#160431", fontWeight: 700 }}>

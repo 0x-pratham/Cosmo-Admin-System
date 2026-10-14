@@ -15,7 +15,7 @@ export default function GenXCodeDashboard() {
   const [formData, setFormData] = useState({
     studentName: "Student Name",
     studentEmail: "",
-    domainKey: "arcade_event",
+    domainKey: "aws_workshop", // Updated default track
     startDate: "",
     endDate: "",
   })
@@ -124,8 +124,8 @@ export default function GenXCodeDashboard() {
         studentName: formData.studentName,
         studentEmail: formData.studentEmail,
         domainKey: formData.domainKey,
-        domainName: selectedDomain?.domainName ?? "",
-        role: selectedDomain?.role ?? "",
+        domainName: selectedDomain?.domainName || "AWS Cloud Workshop",
+        role: selectedDomain?.role || "Participant",
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         pdfUrl,
@@ -140,8 +140,8 @@ export default function GenXCodeDashboard() {
           type: "genxcode_certificate",
           studentName: formData.studentName,
           studentEmail: formData.studentEmail,
-          domainName: selectedDomain?.domainName ?? "",
-          role: selectedDomain?.role ?? "",
+          domainName: selectedDomain?.domainName || "AWS Cloud Workshop",
+          role: selectedDomain?.role || "Participant",
           startDate: formattedStartDate,
           endDate: formattedEndDate,
           certificateId,
@@ -158,7 +158,7 @@ export default function GenXCodeDashboard() {
       }
 
       alert(
-        "GenXCode Certificate Exported & Email Sent Successfully!"
+        "AWS Workshop Certificate Exported & Email Sent Successfully!"
       )
     } catch (error) {
       setExportError(
@@ -183,11 +183,11 @@ export default function GenXCodeDashboard() {
                 fontFamily: '"Times New Roman", serif',
               }}
             >
-              GenXCode Certificate
+              GenXCode x AWS Certificate
             </h2>
 
             <p className="text-sm text-gray-500 mt-1">
-              Issue specialized GenXCode completion certificates.
+              Issue specialized GenXCode AWS Cloud Workshop completion certificates.
             </p>
           </div>
 
@@ -238,6 +238,10 @@ export default function GenXCodeDashboard() {
                 }
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-[#6828a2] bg-white"
               >
+                <option value="aws_workshop">
+                  AWS Cloud Workshop
+                </option>
+
                 <option value="arcade_event">
                   GenXCode Arcade
                 </option>
@@ -337,7 +341,7 @@ export default function GenXCodeDashboard() {
               loading={isExporting}
               onClick={handleExportPdf}
             >
-              Generate GenXCode Certificate
+              Generate AWS Certificate
             </LoadingButton>
 
           </div>
@@ -372,8 +376,8 @@ export default function GenXCodeDashboard() {
             >
               <GenXCodeCertificate
                 studentName={formData.studentName}
-                domainName={selectedDomain?.domainName ?? ""}
-                role={selectedDomain?.role ?? ""}
+                domainName={selectedDomain?.domainName || "AWS Cloud Workshop"}
+                role={selectedDomain?.role || "Participant"}
                 startDate={
                   formatDateForPreview(formData.startDate) ||
                   formData.startDate
@@ -407,8 +411,8 @@ export default function GenXCodeDashboard() {
             >
               <GenXCodeCertificate
                 studentName={formData.studentName}
-                domainName={selectedDomain?.domainName ?? ""}
-                role={selectedDomain?.role ?? ""}
+                domainName={selectedDomain?.domainName || "AWS Cloud Workshop"}
+                role={selectedDomain?.role || "Participant"}
                 startDate={
                   formatDateForPreview(formData.startDate) ||
                   formData.startDate

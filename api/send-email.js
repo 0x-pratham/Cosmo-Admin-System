@@ -273,13 +273,13 @@ export default async function handler(req, res) {
     }
 
     // ==========================================
-    // 4. GENXCODE PARTICIPATION CERTIFICATE EMAIL
+    // 4. GENXCODE x AWS WORKSHOP CERTIFICATE EMAIL
     // ==========================================
     if (type === "genxcode_certificate") {
       const response = await resend.emails.send({
         from: "GenXCode by Cosmolix <info@cosmolix.co.in>",
         to: studentEmail,
-        subject: `Your GenXCode Certificate of Participation - ${certificateId}`,
+        subject: `Your AWS Cloud Workshop Certificate - ${certificateId}`,
         html: `
           <!DOCTYPE html>
           <html>
@@ -294,8 +294,8 @@ export default async function handler(req, res) {
                       <td style="background-color: #1b053e; padding: 40px 30px; text-align: center;">
                         <!-- Using main logo as fallback, update to full URL of genxcode.svg if hosted -->
                         <img src="https://arcade.cosmolix.co.in/icon.svg" alt="GenXCode" width="70" style="display: block; margin: 0 auto 16px auto; border: 0; background-color: rgba(255,255,255,0.1); padding: 12px; border-radius: 12px;" />
-                        <h1 style="color: #FFFFFF; font-size: 26px; font-weight: 700; margin: 0 0 8px 0; letter-spacing: -0.5px;">Certificate of Participation</h1>
-                        <p style="color: #c7a6f3; font-size: 13px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 2px;">GenXCode by Cosmolix</p>
+                        <h1 style="color: #FFFFFF; font-size: 26px; font-weight: 700; margin: 0 0 8px 0; letter-spacing: -0.5px;">AWS Cloud Workshop</h1>
+                        <p style="color: #c7a6f3; font-size: 13px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 2px;">GenXCode x AWS</p>
                       </td>
                     </tr>
 
@@ -304,7 +304,7 @@ export default async function handler(req, res) {
                       <td style="padding: 40px 30px;">
                         <p style="font-size: 16px; color: #334155; margin: 0 0 20px 0;">Hi <strong>${studentName}</strong>,</p>
                         <p style="font-size: 15px; color: #475569; line-height: 1.6; margin: 0 0 25px 0;">
-                          Thank you for bringing your energy, creativity, and problem-solving skills to the <strong>${domainName}</strong>! We are thrilled to award you this Certificate of Participation in recognition of your efforts and collaborative spirit.
+                          Thank you for bringing your energy, creativity, and problem-solving skills to the <strong>AWS Cloud Workshop</strong>! We are thrilled to award you this Certificate of Completion in recognition of your efforts and collaborative spirit.
                         </p>
 
                         <!-- Details Box (Light Purple Theme) -->
@@ -324,7 +324,7 @@ export default async function handler(req, res) {
                         </table>
 
                         <p style="font-size: 15px; color: #475569; line-height: 1.6; margin: 0 0 30px 0; text-align: center;">
-                          Click below to download and view your official high-resolution GenXCode certificate.
+                          Click below to download and view your official high-resolution AWS certificate.
                         </p>
 
                         <!-- CTA (GenXCode Purple) -->
@@ -356,7 +356,7 @@ export default async function handler(req, res) {
           </html>
         `,
       });
-      return res.status(200).json({ success: true, message: "GenXCode Certificate email sent successfully", response });
+      return res.status(200).json({ success: true, message: "GenXCode AWS Certificate email sent successfully", response });
     }
 
   } catch (error) {
